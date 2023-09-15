@@ -17,38 +17,38 @@ enum Provider {
 }
 
 model User {
-  id           String    @id @unique @default(uuid())
-  email        String    @unique
+  id           String         @id @unique @default(uuid())
+  email        String         @unique
   provider     Provider
-  name         String    @db.VarChar(5)
-  nickname     String    @unique @db.VarChar(10)
-  phone        String    @db.VarChar(13)
+  name         String         @db.VarChar(5)
+  nickname     String         @unique @db.VarChar(10)
+  phone        String         @db.VarChar(13)
   profileImage String
   major        String
   interests    UserInterest[]
 }
 
 model Interest {
-  id             String      @id @unique @default(uuid())
-  interest       String      @unique
-  keywords       Keyword[]  
-  userInterests  UserInterest[] 
+  id            String         @id @unique @default(uuid())
+  interest      String         @unique
+  keywords      Keyword[]
+  userInterests UserInterest[]
 }
 
 model Keyword {
-  id            String       @id @unique @default(uuid())
-  keyword       String       @unique
-  interests     Interest[] 
-  userInterests UserInterest[] 
+  id            String         @id @unique @default(uuid())
+  keyword       String         @unique
+  interests     Interest[]
+  userInterests UserInterest[]
 }
 
 model UserInterest {
-  id         String    @id @unique @default(uuid())
-  user       User      @relation(fields: [userId], references: [id])
+  id         String   @id @unique @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
   userId     String
-  interest   Interest  @relation(fields: [interestId], references: [id])
+  interest   Interest @relation(fields: [interestId], references: [id])
   interestId String
-  keyword    Keyword   @relation(fields: [keywordId], references: [id])
+  keyword    Keyword  @relation(fields: [keywordId], references: [id])
   keywordId  String
 }
 
