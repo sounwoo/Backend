@@ -37,7 +37,10 @@ export class CommunityService {
         nickName: nickname,
         content,
         page,
-    }: FindManyCommunityDTO): Promise<CommunityFindManyType[]> {
+        main,
+    }: FindManyCommunityDTO & { main?: boolean }): Promise<
+        CommunityFindManyType[]
+    > {
         return this.prisma.community.findMany({
             where: {
                 ...(category && { category }),
@@ -67,9 +70,9 @@ export class CommunityService {
                 },
             },
             orderBy: {
-                view: 'desc',
+                ...(main ? { view: 'desc' } : { date: 'desc' }),
             },
-            ...(page && { skip: (+page - 1) * 12, take: +page * 12 }),
+            ...(page && { skip: (+page - 1) * 10, take: 10 }),
         });
     }
 
