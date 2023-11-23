@@ -31,6 +31,7 @@ import {
 import { paths } from '../../common/crawiling/interface';
 import { calenderData } from '../../common/util/calender_data';
 import { calanderDate } from '../../common/util/getCalenderData';
+import { getDday } from '../../common/util/getDday';
 
 @Service()
 export class UserService {
@@ -418,6 +419,7 @@ export class UserService {
                     ? data.body.hits.total.value
                     : data.body.hits.hits.length
                     ? data.body.hits.hits.map((el: any) => {
+                          const { period, ...rest } = el._source;
                           if (path === 'language') {
                               const { test, ...data } = el._source;
                               return {
@@ -440,7 +442,8 @@ export class UserService {
                           }
                           return {
                               id: el._id,
-                              ...el._source,
+                              ...rest,
+                              Dday: getDday({ period }),
                           };
                       })
                     : null;
