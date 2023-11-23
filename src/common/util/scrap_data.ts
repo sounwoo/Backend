@@ -18,6 +18,7 @@ export const scrapData = (path: Path['path'] | 'language') => {
         'enterprise',
         'scrap',
         'view',
+        'period',
     ];
     const viewScrap = ['view', 'scrap'];
     const { id, column } = scrapType(path);

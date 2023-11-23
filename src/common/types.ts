@@ -24,6 +24,10 @@ export type calanderDateType = {
     data: calanderDataType;
 };
 
+export type getDdayType = {
+    period: string;
+};
+
 export type getYearMonthDateType = {
     path: paths['path'];
     data: calanderDataType;

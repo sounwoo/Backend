@@ -96,7 +96,6 @@ export class PathCrawling {
                         }
 
                         const data = {
-                            Dday: $('.recruitText').text(),
                             title: $('h2.title').text(),
                             view: +String($('span.count').html()),
                             mainImage: $(`img.${mainImageType}`).attr('src'),

@@ -20,6 +20,7 @@ import { splitDate } from '../../common/util/splitDate';
 import { randomSolution } from '../../common/util/return_data_randomSolution';
 import { UserService } from '../users/users.service';
 import { myKeywordCrawlingObj } from '../../common/util/myKeywordCrawlingObj';
+import { getDday } from '../../common/util/getDday';
 
 @Service()
 export class CrawlingService {
@@ -107,6 +108,9 @@ export class CrawlingService {
                               ...(path === 'qnet' && {
                                   ...examSchedulesSort(el),
                               }),
+                              ...(path === 'competition' || path === 'outside'
+                                  ? { Dday: getDday({ period }) }
+                                  : undefined),
                               ...(id && { isScrap: scrapIds.includes(el._id) }),
                           };
                       })
@@ -158,9 +162,14 @@ export class CrawlingService {
                 { ignore: [404] },
             )
             .then((el) => {
+                const { period } = el.body.get._source;
+
                 return {
                     ...(path === 'qnet' && {
                         mainImage: process.env.QNET_IMAGE,
+                    }),
+                    ...(path !== 'qnet' && {
+                        Dday: getDday({ period }),
                     }),
                     ...(el.body.error ? el.meta.context : el.body.get._source),
                     ...(id && { isScrap: scrapIds.includes(el.body._id) }),
@@ -240,17 +249,21 @@ export class CrawlingService {
             })
             .then((el) =>
                 el.body.hits.hits.map((el: any) => {
-                    if (path === 'intern') {
-                        delete el._source.period;
-                        delete el._source.preferentialTreatment;
-                    }
-                    if (path === 'qnet') delete el._source.examSchedules;
+                    const {
+                        period,
+                        preferentialTreatment,
+                        examSchedules,
+                        ...rest
+                    } = el._source;
 
                     return {
                         id: el._id,
-                        ...el._source,
+                        ...rest,
                         ...(path === 'qnet' && {
                             mainImage: process.env.QNET_IMAGE,
+                        }),
+                        ...(path !== 'qnet' && {
+                            Dday: getDday({ period }),
                         }),
                         ...(id && { isScrap: scrapIds.includes(el._id) }),
                     };
