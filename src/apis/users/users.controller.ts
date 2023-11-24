@@ -14,6 +14,7 @@ import {
     updateDTOType,
     validateTokenType,
     yearMonthType,
+    patchThermometerType,
 } from '../../common/types';
 import { asyncHandler } from '../../middleware/async.handler';
 import { Container } from 'typedi';
@@ -136,6 +137,13 @@ class UserController {
             Validate.getCalender,
             AccessGuard.handle,
             asyncHandler(this.getCalender.bind(this)),
+        );
+
+        this.router.patch(
+            '/patchThermometer',
+            Validate.patchThermometer,
+            AccessGuard.handle,
+            asyncHandler(this.patchThermometer.bind(this)),
         );
     }
 
@@ -307,6 +315,17 @@ class UserController {
                 id,
                 year,
                 month,
+            }),
+        });
+    }
+
+    async patchThermometer(req: Request, res: Response) {
+        const { id } = req.user as idType;
+
+        res.status(200).json({
+            data: await this.userService.patchThermometer({
+                id,
+                ...(req.body as patchThermometerType),
             }),
         });
     }

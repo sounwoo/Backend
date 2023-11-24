@@ -13,6 +13,7 @@ import {
     IScrapping,
     IGetUserScrap,
     IGetCalender,
+    IThermometerPatch,
 } from './interfaces/user.interface';
 import CustomError from '../../common/error/customError';
 import { Service } from 'typedi';
@@ -25,6 +26,7 @@ import { percentage, ThermometerPaths } from '../../common/util/thermometer';
 import {
     emailProviderType,
     getScrapIdType,
+    idType,
     interestKeywordType,
     userProfileType,
 } from '../../common/types';
@@ -720,5 +722,32 @@ export class UserService {
             ),
         );
         return calender;
+    }
+
+    async patchThermometer({
+        id,
+        path,
+        thermometerId,
+        patchThermometer,
+    }: IThermometerPatch): Promise<boolean> {
+        await this.isUserByID(id);
+
+        await this.prisma.user.update({
+            where: { id },
+            data: {
+                [ThermometerPaths[path]]: {
+                    update: {
+                        where: { id: thermometerId },
+                        data: {
+                            activeContent: patchThermometer.activeContent,
+                            period: patchThermometer.period,
+                            score: patchThermometer.score,
+                        },
+                    },
+                },
+            },
+        });
+
+        return true;
     }
 }

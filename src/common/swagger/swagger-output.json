@@ -1479,6 +1479,106 @@
                 }
             }
         },
+        "/user/patchThermometer": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "열정온도계 활동내역 게시글 내용 수정하기",
+                "description": "path : competition, outside, qnet, intern, language ",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "path": {
+                                        "type": "string",
+                                        "example": "competition"
+                                    },
+                                    "thermometerId": {
+                                        "type": "string",
+                                        "example": "81c0097e-73ec-4409-87a4-5ca315681276"
+                                    },
+                                    "patchThermometer": {
+                                        "type": "object",
+                                        "example": {
+                                            "activeContent": "활동 내용 수정 작성",
+                                            "period": "기간 수정(intern인 경우에만 추가)",
+                                            "score": "점수 수정(language인 경우에만 추가)"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "응답 성공",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "열정온도 활동내역 수정 작성": {
+                                        "value": {
+                                            "success": true
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "true": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "properties": {
+                                                "false": {
+                                                    "type": "boolean"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "요청 형식 에러",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": [
+                                        "path : path must be a string",
+                                        "activeContent : activeContent must be a string",
+                                        "period : period must be a string (intern인 경우에만 추가)",
+                                        "score : score must be a string (language인 경우에만 추가)"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "서버 에러",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "서버 문제"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/scrapping": {
             "post": {
                 "tags": ["Users"],

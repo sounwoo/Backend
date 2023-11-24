@@ -35,6 +35,7 @@ import { ThermometerPath } from '../../apis/users/types/thermometer.type';
 import { FindPathThermometerDTO } from '../../apis/users/dto/findPathThermometer.dto';
 import { LoginDTO } from '../../apis/auth/dto/login.dto';
 import { GetCalenderDTO } from '../../apis/users/dto/getCalender.dto';
+import { PatchThermometerDTO } from '../../apis/users/dto/patch-thermometer.dto';
 
 class Validate {
     constructor() {
@@ -70,6 +71,7 @@ class Validate {
         );
         this.login = asyncHandler(this.login.bind(this));
         this.getCalender = asyncHandler(this.getCalender.bind(this));
+        this.patchThermometer = asyncHandler(this.patchThermometer.bind(this));
     }
 
     async errors<T extends object>(dto: T) {
@@ -221,6 +223,13 @@ class Validate {
     async getCalender(req: Request, _: Response, next: NextFunction) {
         const { year, month } = req.query as yearMonthType;
         await this.errors(new GetCalenderDTO({ year, month }));
+
+        next();
+    }
+
+    async patchThermometer(req: Request, _: Response, next: NextFunction) {
+        console.log(req.body);
+        await this.errors(new PatchThermometerDTO(req.body));
 
         next();
     }

@@ -1,6 +1,5 @@
 import {
     Community,
-    Keyword,
     MainMajor,
     Prisma,
     PrismaClient,
@@ -105,4 +104,15 @@ export interface ITopPercentage {
 export interface IThermometerFindPath {
     id: idType['id'];
     path: Path['path'] | 'language';
+}
+
+export interface IThermometerPatch {
+    id: idType['id'];
+    path: Path['path'] | 'language';
+    thermometerId: string;
+    patchThermometer: {
+        activeContent: UserIntern['activeContent'];
+        period?: UserIntern['period'];
+        score?: UserLanguage['score'];
+    };
 }
