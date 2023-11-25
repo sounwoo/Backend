@@ -8,6 +8,7 @@ export const randomSolution = (el: Path['path']): string[] => {
         'Dday',
         'interests',
         'target',
+        'period',
     ];
     const randomSolution = {
         competition: [...commonCompetitionOutside],

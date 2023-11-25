@@ -308,6 +308,10 @@ export class CrawlingService {
                                           wtPeriod: examSchedules[0].wtPeriod,
                                           ptPeriod: examSchedules[0].ptPeriod,
                                       }),
+                                      ...(el !== 'intern' &&
+                                          el !== 'qnet' && {
+                                              Dday: getDday({ period }),
+                                          }),
                                       ...rest,
                                   };
                                   this.redis.set(
