@@ -4,12 +4,12 @@ import {
     MainMajor,
     Provider,
     User,
+    UserCompetition,
     UserIntern,
     UserLanguage,
 } from '@prisma/client';
 import { CreateUserDTO } from '../apis/users/dto/create-user.dto';
 import { Path, paths } from './crawiling/interface';
-import { CustomPrismaClient } from '../database/prismaConfig';
 import { UpdateUserDTO } from '../apis/users/dto/update-user.dto';
 import { GetCalenderDTO } from '../apis/users/dto/getCalender.dto';
 
@@ -154,7 +154,6 @@ export type updateThermometerType = {
     path: Path['path'] | 'language';
     createThermometer: {
         category: Community['category'];
-        keyword: Keyword['keyword'];
         activeTitle: UserIntern['activeTitle'];
         activeContent: UserIntern['activeContent'];
         period?: UserIntern['period'];
@@ -162,4 +161,14 @@ export type updateThermometerType = {
     };
     mainMajorId: MainMajor['id'];
     thermometerId?: string | undefined;
+};
+
+export type patchThermometerType = {
+    path: Path['path'] | 'language';
+    thermometerId: string;
+    patchThermometer: {
+        activeContent: UserIntern['activeContent'];
+        period?: UserIntern['period'];
+        score?: UserLanguage['score'];
+    };
 };
