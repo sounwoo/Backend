@@ -400,6 +400,7 @@
                             "application/json": {
                                 "example": {
                                     "data": {
+                                        "id": "유저 아이디 :255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                         "nickname": "닉네임",
                                         "profileImage": "profile url",
                                         "thermometer": 0,
@@ -467,26 +468,108 @@
                                         {
                                             "type": "object",
                                             "properties": {
-                                                "profileImage": {
+                                                "id": {
                                                     "type": "string"
                                                 },
                                                 "nickname": {
                                                     "type": "string"
                                                 },
-                                                "interestKeyword": {
+                                                "profileImage": {
+                                                    "type": "string"
+                                                },
+                                                "thermometer": {
+                                                    "type": "number"
+                                                },
+                                                "top": {
+                                                    "type": "number"
+                                                },
+                                                "mainMajor": {
+                                                    "type": "string"
+                                                },
+                                                "solution": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "object",
                                                         "properties": {
-                                                            "interest": {
-                                                                "type": "string"
+                                                            "outside": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "mainImage": {
+                                                                                "type": "string",
+                                                                                "description": "이미지 url : awihqwifbjqjfbo"
+                                                                            },
+                                                                            "enterprise": {
+                                                                                "type": "string",
+                                                                                "description": "조직: (주)~~"
+                                                                            },
+                                                                            "Dday": {
+                                                                                "type": "string",
+                                                                                "description": "남은 일수 : D-10"
+                                                                            },
+                                                                            "location": {
+                                                                                "type": "string",
+                                                                                "description": "서울 강남구"
+                                                                            },
+                                                                            "title": {
+                                                                                "type": "string",
+                                                                                "description": "제목"
+                                                                            },
+                                                                            "interests": {
+                                                                                "type": "string",
+                                                                                "description": "활동분야"
+                                                                            },
+                                                                            "target": {
+                                                                                "type": "string",
+                                                                                "description": "활동대상"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
                                                             },
-                                                            "keyword": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "type": "string",
-                                                                    "keyword": {
-                                                                        "type": "string"
+                                                            "competition": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "mainImage": {
+                                                                                "type": "string",
+                                                                                "description": "이미지 url : awihqwifbjqjfbo"
+                                                                            },
+                                                                            "enterprise": {
+                                                                                "type": "string",
+                                                                                "description": "조직: (주)~~"
+                                                                            },
+                                                                            "Dday": {
+                                                                                "type": "string",
+                                                                                "description": "남은 일수 : D-10"
+                                                                            },
+                                                                            "location": {
+                                                                                "type": "string",
+                                                                                "description": "서울 강남구"
+                                                                            },
+                                                                            "title": {
+                                                                                "type": "string",
+                                                                                "description": "제목"
+                                                                            },
+                                                                            "interests": {
+                                                                                "type": "string",
+                                                                                "description": "활동분야"
+                                                                            },
+                                                                            "target": {
+                                                                                "type": "string",
+                                                                                "description": "활동대상"
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
                                                             }

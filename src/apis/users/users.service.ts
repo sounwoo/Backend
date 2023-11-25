@@ -233,8 +233,9 @@ export class UserService {
 
     async getLoginUserInfo(id: User['id']) {
         const user = await this.isUserByID(id).then((el) => {
-            const { nickname, profileImage, thermometer, top, subMajorId } = el;
-            return { nickname, profileImage, thermometer, top, subMajorId };
+            const { id, nickname, profileImage, thermometer, top, subMajorId } =
+                el;
+            return { id, nickname, profileImage, thermometer, top, subMajorId };
         });
 
         const { subMajorId, ...rest } = user;
