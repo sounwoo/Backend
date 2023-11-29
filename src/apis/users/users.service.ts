@@ -26,7 +26,6 @@ import { percentage, ThermometerPaths } from '../../common/util/thermometer';
 import {
     emailProviderType,
     getScrapIdType,
-    idType,
     interestKeywordType,
     userProfileType,
 } from '../../common/types';
@@ -303,7 +302,8 @@ export class UserService {
 
         const chkUser = await this.isUserByID(id);
 
-        data.nickname && (await this.isNickname(data.nickname));
+        if (data.nickname !== chkUser.nickname)
+            await this.isNickname(data.nickname as string);
 
         if (interestKeyword) {
             await this.prisma.userInterest.deleteMany({
