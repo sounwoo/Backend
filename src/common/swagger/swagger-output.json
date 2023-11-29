@@ -760,6 +760,7 @@
                                             "path": [
                                                 {
                                                     "id": "cf7020cd-17da-4fc6-8f08-efd23f0abda5",
+                                                    "field": "공모전",
                                                     "category": "기획/아이디어",
                                                     "activeTitle": " 활동별 제목",
                                                     "activeContent": "활동별 내용",
@@ -1167,6 +1168,7 @@
                                     "createThermometer": {
                                         "type": "object",
                                         "example": {
+                                            "field": "공모전",
                                             "category": "#기획/아이디어",
                                             "activeTitle": "2023 meta Spark AR콘텐츠 공모전",
                                             "activeContent": "활동 내용 작성",
