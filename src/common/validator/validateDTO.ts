@@ -133,9 +133,9 @@ class Validate {
     }
 
     async updateProfile(req: Request, _: Response, next: NextFunction) {
-        const { profileImage, nickname, interests } = req.body;
+        const { profileImage, nickname, interestKeyword } = req.body;
         await this.errors(
-            new UpdateUserDTO({ profileImage, nickname, interests }),
+            new UpdateUserDTO({ profileImage, nickname, interestKeyword }),
         );
 
         next();

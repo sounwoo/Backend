@@ -1,8 +1,9 @@
 import { User } from '@prisma/client';
 import { IsEmail, IsString, Length, Matches } from 'class-validator';
 
-export interface Interests {
-    [key: string]: string[];
+export interface interestKeyword {
+    interest: string;
+    keyword: string[];
 }
 
 export interface Major {
@@ -34,7 +35,7 @@ export class CreateUserDTO {
 
     major: Major;
 
-    interests: Interests[];
+    interestKeyword: interestKeyword[];
 
     constructor(data: CreateUserDTO) {
         this.email = data.email;
@@ -44,6 +45,6 @@ export class CreateUserDTO {
         this.phone = data.phone;
         this.profileImage = data.profileImage;
         this.major = data.major;
-        this.interests = data.interests;
+        this.interestKeyword = data.interestKeyword;
     }
 }

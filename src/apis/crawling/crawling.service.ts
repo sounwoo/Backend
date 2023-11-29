@@ -5,6 +5,7 @@ import {
     findeDetailType,
     languagePath,
     paths,
+    testType,
 } from '../../common/crawiling/interface';
 import { Service } from 'typedi';
 import { ElasitcClient } from '../../database/elasticConfig';
@@ -15,12 +16,19 @@ import { findeDetailCrawling } from './interfaces/returnType/findDetailCrawling.
 import { findCrawling } from './interfaces/returnType/findeCrawling.interface';
 import RedisClient from '../../database/redisConfig';
 import { examSchedulesSort } from '../../common/util/examSchedules.sort';
-import { languageTitle } from '../../common/util/languageData';
+import {
+    languageClassify,
+    languageTitle,
+} from '../../common/util/languageData';
 import { splitDate } from '../../common/util/splitDate';
 import { randomSolution } from '../../common/util/return_data_randomSolution';
 import { UserService } from '../users/users.service';
 import { myKeywordCrawlingObj } from '../../common/util/myKeywordCrawlingObj';
 import { getDday } from '../../common/util/getDday';
+import {
+    myKeywordCrawlingObjType,
+    myKeywordCrawlingReturnType,
+} from './types/myKeywordCrawling.type';
 
 @Service()
 export class CrawlingService {
@@ -120,7 +128,7 @@ export class CrawlingService {
 
     async myKeywordCrawling({
         ...data
-    }: paths & { id: string }): Promise<findCrawling[]> {
+    }: paths & { id: string }): Promise<myKeywordCrawlingReturnType | []> {
         const userKeyword = await this.userService.findUserKeyword({
             ...data,
         });
@@ -128,15 +136,74 @@ export class CrawlingService {
 
         const { id, ..._data } = { ...data };
 
-        const params = {
+        const keyword = userKeyword.split(' ');
+
+        const obj: myKeywordCrawlingObjType = {
+            영어: [],
+            중국어: [],
+            일본어: [],
+        };
+
+        const languageResult: any = {};
+
+        if (data.path === 'language') {
+            keyword.forEach((el) => {
+                const classify = languageClassify(el as testType);
+                obj[classify].push(el);
+            });
+
+            const processLanguage = async (lanType: string) => {
+                const lan = obj[lanType];
+                if (lan.length) {
+                    languageResult[lanType] = languageResult[lanType] || {
+                        keyword: [],
+                        data: [],
+                    };
+
+                    if (!_data.count) {
+                        for (const lanItem of lan) {
+                            languageResult[lanType]['keyword'].push(
+                                languageTitle(lanItem as testType),
+                            );
+                        }
+                    } else delete languageResult[lanType]['keyword'];
+
+                    const join = lan.join(' ');
+                    languageResult[lanType]['data'] = await this.findeCrawling({
+                        id,
+                        ..._data,
+                        ...(userKeyword.length && {
+                            [myKeywordCrawlingObj(data.path)]: join,
+                        }),
+                    });
+                }
+            };
+
+            await Promise.all(
+                ['영어', '중국어', '일본어'].map(async (lanType) =>
+                    processLanguage(lanType),
+                ),
+            );
+
+            return {
+                data: languageResult,
+            };
+        }
+
+        const result = await this.findeCrawling({
             id,
             ..._data,
             ...(userKeyword.length && {
                 [myKeywordCrawlingObj(data.path)]: userKeyword,
             }),
-        };
+        });
 
-        return this.findeCrawling(params);
+        return _data.count
+            ? { data: result }
+            : {
+                  keyword,
+                  data: result,
+              };
     }
 
     async findeDetailCrawling({

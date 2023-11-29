@@ -12,7 +12,7 @@ import {
 } from '@prisma/client';
 import { Path, paths } from '../../../common/crawiling/interface';
 import { idType } from '../../../common/types';
-import { CreateUserDTO, Interests } from '../dto/create-user.dto';
+import { CreateUserDTO, interestKeyword } from '../dto/create-user.dto';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { ScrappingDTO } from '../dto/scrapping.dto';
 import { GetUserScrapDTO } from '../dto/getUserScrap.dto';
@@ -40,7 +40,7 @@ export interface IUpdateProfile {
 export interface IUserUpdateDTO {
     profileImage?: CreateUserDTO['profileImage'];
     nickname?: CreateUserDTO['nickname'];
-    interests?: CreateUserDTO['interests'];
+    interestKeyword?: CreateUserDTO['interestKeyword'];
 }
 
 export interface IScrapping {
@@ -69,7 +69,7 @@ export interface ISaveInterestKeyword {
         | '$use'
         | '$extends'
     >;
-    interests: Interests[];
+    interestKeyword: interestKeyword[];
 
     id: User['id'];
 }

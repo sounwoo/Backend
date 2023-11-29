@@ -26,3 +26,17 @@ export const languageData = (Dday: string, date: string) => {
 
     return { examDate, openDate, closeDate, sortDate };
 };
+
+export const languageClassify = (test: testType): string => {
+    const obj = {
+        영어: ['toeic', 'toeicBR', 'toeicSW', 'toeicST', 'toeicWT'],
+        중국어: ['ch'],
+        일본어: ['jp', 'jpSP'],
+    };
+
+    return obj.영어.includes(test)
+        ? '영어'
+        : obj.중국어.includes(test)
+        ? '중국어'
+        : '일본어';
+};

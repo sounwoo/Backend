@@ -33,7 +33,7 @@ model User {
   subMajorId       String
   thermometer      Int                @default(0)
   top              Int                @default(100)
-  interests        UserInterest[]
+  interestKeyword  UserInterest[]
   communities      Community[]
   comments         Comment[]
   communityLike    CommunityLike[]
