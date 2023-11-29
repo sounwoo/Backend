@@ -78,6 +78,7 @@ export interface IThermometerUpdate {
     id: idType['id'];
     path: Path['path'] | 'language';
     createThermometer: {
+        field: string;
         category: Community['category'];
         activeTitle: UserIntern['activeTitle'];
         activeContent: UserIntern['activeContent'];

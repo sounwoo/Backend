@@ -613,13 +613,13 @@ export class UserService {
     }: IThermometerFindPath): Promise<any> {
         await this.isUserByID(id);
         const addField = await this.addField(ThermometerPaths[path]);
-
         const users = await this.prisma.user.findMany({
             where: { id },
             select: {
                 [ThermometerPaths[path]]: {
                     select: {
                         id: true,
+                        field: true,
                         category: true,
                         activeTitle: true,
                         activeContent: true,
@@ -629,11 +629,10 @@ export class UserService {
             },
         });
 
+        console.log(users[0]);
+
         return users[0][ThermometerPaths[path]].map((user) => ({
-            id: user.id,
-            category: user.category,
-            activeTitle: user.activeTitle,
-            activeContent: user.activeContent,
+            ...user,
         }));
     }
 

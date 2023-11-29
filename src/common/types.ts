@@ -153,6 +153,7 @@ export type emailProviderType = {
 export type updateThermometerType = {
     path: Path['path'] | 'language';
     createThermometer: {
+        field: string;
         category: Community['category'];
         activeTitle: UserIntern['activeTitle'];
         activeContent: UserIntern['activeContent'];

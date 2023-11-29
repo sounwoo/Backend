@@ -760,10 +760,11 @@
                                             "path": [
                                                 {
                                                     "id": "cf7020cd-17da-4fc6-8f08-efd23f0abda5",
-                                                    "category": "competition, outside, qnet, language, intern 중 1",
-                                                    "keyword": "활동별 키워드",
+                                                    "category": "기획/아이디어",
                                                     "activeTitle": " 활동별 제목",
-                                                    "activeContent": "활동별내용"
+                                                    "activeContent": "활동별 내용",
+                                                    "score": "language인 경우",
+                                                    "period": "intern인 경우"
                                                 }
                                             ]
                                         }
