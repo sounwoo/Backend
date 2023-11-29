@@ -5,7 +5,7 @@ import {
     Path,
     createLinkareerPaths,
     createPaths,
-    fidneCrawlingType,
+    findeCrawlingType,
     findeDetailType,
 } from '../../common/crawiling/interface';
 import { asyncHandler } from '../../middleware/async.handler';
@@ -51,7 +51,7 @@ class CrawlingController {
     async findeCrawling(req: Request, res: Response) {
         // #swagger.tags = ['Crawling']
         const { path } = req.params as Path;
-        const { ...data } = req.query as fidneCrawlingType;
+        const { ...data } = req.query as findeCrawlingType;
 
         res.status(200).json({
             data: await this.crawlingService.findeCrawling({
@@ -105,7 +105,7 @@ class CrawlingController {
     async myKeywordCrawling(req: Request, res: Response) {
         // #swagger.tags = ['Crawling']w
         const { path } = req.params as Path;
-        const { ...data } = req.query as fidneCrawlingType;
+        const { ...data } = req.query as findeCrawlingType;
         const { id } = req.user as idType;
         const result = await this.crawlingService.myKeywordCrawling({
             ...data,
@@ -113,9 +113,7 @@ class CrawlingController {
             path,
         });
 
-        res.status(200).json({
-            data: result,
-        });
+        res.status(200).json(result);
     }
 
     async randomCrawling(req: Request, res: Response) {

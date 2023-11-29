@@ -1,5 +1,5 @@
 import { IsString, IsOptional, Length, Matches } from 'class-validator';
-import { Interests } from './create-user.dto';
+import { interestKeyword } from './create-user.dto';
 
 export class UpdateUserDTO {
     @IsOptional()
@@ -12,11 +12,11 @@ export class UpdateUserDTO {
     nickname?: string;
 
     @IsOptional()
-    interests?: Interests[];
+    interestKeyword?: interestKeyword[];
 
     constructor(data: UpdateUserDTO) {
         this.profileImage = data.profileImage;
         this.nickname = data.nickname;
-        this.interests = data.interests;
+        this.interestKeyword = data.interestKeyword;
     }
 }

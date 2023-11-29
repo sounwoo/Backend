@@ -81,7 +81,7 @@
                                             "phone": "01012345678",
                                             "profileImage": "awihqwifbjqjfbo",
                                             "major": "컴퓨터공학",
-                                            "interests": [
+                                            "interestKeyword": [
                                                 {
                                                     "id": "asdsadasdasdasdasdsef",
                                                     "userId": "adfhttwerqwrasxczx",
@@ -129,7 +129,7 @@
                                                 "major": {
                                                     "type": "string"
                                                 },
-                                                "interests": {
+                                                "interestKeyword": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "object",
@@ -833,89 +833,55 @@
                                             }
                                         }
                                     },
-                                    "interests": {
+                                    "interestKeyword": {
                                         "type": "array",
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "competition": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "기획/아이디어",
-                                                        "과학/공학"
-                                                    ]
+                                                "interest": {
+                                                    "type": "string"
                                                 },
-                                                "outside": {
+                                                "keyword": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "서포터즈",
-                                                        "멘토링"
-                                                    ]
-                                                },
-                                                "intern": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "대기업",
-                                                        "중견기업"
-                                                    ]
-                                                },
-                                                "language": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "toeic",
-                                                        "toeicWT",
-                                                        "ch"
-                                                    ]
-                                                },
-                                                "qnet": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "환경.에너지",
-                                                        "정보통신"
-                                                    ]
+                                                    }
                                                 }
                                             }
                                         },
                                         "example": [
                                             {
-                                                "competition": [
+                                                "interest": "competition",
+                                                "keyword": [
                                                     "기획/아이디어",
                                                     "과학/공학"
                                                 ]
                                             },
                                             {
-                                                "outside": [
+                                                "interest": "outside",
+                                                "keyword": [
                                                     "서포터즈",
                                                     "멘토링"
                                                 ]
                                             },
                                             {
-                                                "intern": ["대기업", "중견기업"]
+                                                "interest": "intern",
+                                                "keyword": [
+                                                    "대기업",
+                                                    "중견기업"
+                                                ]
                                             },
                                             {
-                                                "language": [
+                                                "interest": "language",
+                                                "keyword": [
                                                     "toeic",
                                                     "toeicWT",
                                                     "ch"
                                                 ]
                                             },
                                             {
-                                                "qnet": [
+                                                "interest": "qnet",
+                                                "keyword": [
                                                     "환경.에너지",
                                                     "정보통신"
                                                 ]
@@ -1312,89 +1278,58 @@
                                         "type": "string",
                                         "example": "새로운 닉네임"
                                     },
-                                    "interests": {
+                                    "interestKeyword": {
                                         "type": "array",
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "competition": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "기획/아이디어",
-                                                        "과학/공학"
-                                                    ]
+                                                "interest": {
+                                                    "type": "string"
                                                 },
-                                                "outside": {
+                                                "keyword": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "서포터즈",
-                                                        "멘토링"
-                                                    ]
-                                                },
-                                                "intern": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "대기업",
-                                                        "중견기업"
-                                                    ]
-                                                },
-                                                "language": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "toeic",
-                                                        "toeicWT",
-                                                        "ch"
-                                                    ]
-                                                },
-                                                "qnet": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    },
-                                                    "example": [
-                                                        "기계",
-                                                        "정보통신"
-                                                    ]
+                                                    }
                                                 }
                                             }
                                         },
                                         "example": [
                                             {
-                                                "competition": [
+                                                "interest": "competition",
+                                                "keyword": [
                                                     "기획/아이디어",
                                                     "과학/공학"
                                                 ]
                                             },
                                             {
-                                                "outside": [
+                                                "interest": "outside",
+                                                "keyword": [
                                                     "서포터즈",
                                                     "멘토링"
                                                 ]
                                             },
                                             {
-                                                "intern": ["대기업", "중견기업"]
+                                                "interest": "intern",
+                                                "keyword": [
+                                                    "대기업",
+                                                    "중견기업"
+                                                ]
                                             },
                                             {
-                                                "language": [
+                                                "interest": "language",
+                                                "keyword": [
                                                     "toeic",
                                                     "toeicWT",
                                                     "ch"
                                                 ]
                                             },
                                             {
-                                                "qnet": ["기계", "정보통신"]
+                                                "interest": "qnet",
+                                                "keyword": [
+                                                    "환경.에너지",
+                                                    "정보통신"
+                                                ]
                                             }
                                         ]
                                     }
@@ -1419,7 +1354,7 @@
                                             "phone": "01012345678",
                                             "profileImage": "awihqwifbjqjfbo",
                                             "major": "컴퓨터공학",
-                                            "interests": [
+                                            "interestKeyword": [
                                                 {
                                                     "id": "asdsadasdasdasdasdsef",
                                                     "userId": "adfhttwerqwrasxczx",
@@ -1467,7 +1402,7 @@
                                                 "major": {
                                                     "type": "string"
                                                 },
-                                                "interests": {
+                                                "interestKeyword": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "object",
@@ -1815,7 +1750,8 @@
                                                     "scrap": 0,
                                                     "enterprise": "조직: (주)~~",
                                                     "Dday": "남은 일수 : D-10",
-                                                    "title": "제목 : 모집"
+                                                    "title": "제목 : 모집",
+                                                    "isScrap": true
                                                 }
                                             ]
                                         }
@@ -1832,7 +1768,8 @@
                                                     "enterprise": "조직: (주)~~",
                                                     "Dday": "남은 일수 : D-10",
                                                     "location": "지역 :서울",
-                                                    "title": "제목"
+                                                    "title": "제목",
+                                                    "isScrap": true
                                                 }
                                             ]
                                         }
@@ -1848,7 +1785,8 @@
                                                     "scrap": 0,
                                                     "enterprise": "조직: (주)~~",
                                                     "Dday": "남은 일수 : D-10",
-                                                    "title": "제목"
+                                                    "title": "제목",
+                                                    "isScrap": true
                                                 }
                                             ]
                                         }
@@ -1865,7 +1803,8 @@
                                                     "institution": "시행기관 : 한국산업인력공단",
                                                     "scrap": 0,
                                                     "view": 100,
-                                                    "title": "자격증명 : 에너지산업기사"
+                                                    "title": "자격증명 : 에너지산업기사",
+                                                    "isScrap": true
                                                 }
                                             ]
                                         }
@@ -1881,7 +1820,8 @@
                                                     "scrap": 1,
                                                     "title": "제목",
                                                     "examDate": "시험날짜 : 2023-11-19 09:20",
-                                                    "closeDate": "접수 마감 날짜 : 2023-11-06 10:00"
+                                                    "closeDate": "접수 마감 날짜 : 2023-11-06 10:00",
+                                                    "isScrap": true
                                                 }
                                             ]
                                         }
@@ -1912,6 +1852,9 @@
                                                 },
                                                 "title": {
                                                     "type": "string"
+                                                },
+                                                "isScrap": {
+                                                    "type": "boolean"
                                                 }
                                             }
                                         },
@@ -1941,6 +1884,9 @@
                                                 },
                                                 "title": {
                                                     "type": "string"
+                                                },
+                                                "isScrap": {
+                                                    "type": "boolean"
                                                 }
                                             }
                                         },
@@ -1967,6 +1913,9 @@
                                                 },
                                                 "title": {
                                                     "type": "string"
+                                                },
+                                                "isScrap": {
+                                                    "type": "boolean"
                                                 }
                                             }
                                         },
@@ -1996,6 +1945,9 @@
                                                 },
                                                 "title": {
                                                     "type": "string"
+                                                },
+                                                "isScrap": {
+                                                    "type": "boolean"
                                                 }
                                             }
                                         },
@@ -2022,6 +1974,9 @@
                                                 },
                                                 "closeDate": {
                                                     "type": "string"
+                                                },
+                                                "isScrap": {
+                                                    "type": "boolean"
                                                 }
                                             }
                                         }
@@ -3624,6 +3579,10 @@
                                     "competitionData": {
                                         "summary": "공모전 데이터",
                                         "value": {
+                                            "keyword": [
+                                                "과학/공학",
+                                                "기획/아이디어"
+                                            ],
                                             "data": [
                                                 {
                                                     "id": "공모전 id : adfhttwerqwrasxczx",
@@ -3747,6 +3706,7 @@
                                     "outsideData": {
                                         "summary": "대외활동 데이터",
                                         "value": {
+                                            "keyword": ["멘토링", "서포터즈"],
                                             "data": [
                                                 {
                                                     "id": "대외활동 id : asdasda",
@@ -3870,6 +3830,7 @@
                                     "internData": {
                                         "summary": "인턴 데이터",
                                         "value": {
+                                            "keyword": ["중견기업", "대기업"],
                                             "data": [
                                                 {
                                                     "id": "인턴 id : adfhttwerqwrasxczx",
@@ -3981,16 +3942,6 @@
                             "example": "1"
                         },
                         "description": "페이지 네이션"
-                    },
-                    {
-                        "name": "classify",
-                        "in": "query",
-                        "schema": {
-                            "type": "string",
-                            "format": "classify",
-                            "example": "영어"
-                        },
-                        "description": "언어별 조회 (영어, 중국어, 일본어)"
                     }
                 ],
                 "responses": {
@@ -4006,18 +3957,24 @@
                                         }
                                     },
                                     "languageData": {
-                                        "summary": "언어별 데이터",
+                                        "summary": "언어 데이터",
                                         "value": {
-                                            "data": [
-                                                {
-                                                    "id": "언어별 id : adfhttwerqwrasxczx",
-                                                    "closeDate": "접수 마감 날짜 : 2023-11-06 10:00",
-                                                    "examDate": "시험날짜 : 2023-11-19 09:20",
-                                                    "homePage": "접수 홈페이지 : http://~~",
-                                                    "title": "테스트 이름 : TOEIC, TOEIC (Bridge), TOEIC (Speaking, Writing), TOEIC (Writing), TSC 중국어 말하기 시험, JPT, SJPT 일본어 말하기 시험",
-                                                    "isScrap": "true or false"
-                                                }
-                                            ]
+                                            "영어": {
+                                                "keyword": [
+                                                    "TOEIC",
+                                                    "TOEIC (Writing)"
+                                                ],
+                                                "data": [
+                                                    {
+                                                        "id": "언어별 id : adfhttwerqwrasxczx",
+                                                        "closeDate": "접수 마감 날짜 : 2023-11-06 10:00",
+                                                        "examDate": "시험날짜 : 2023-11-19 09:20",
+                                                        "homePage": "접수 홈페이지 : http://~~",
+                                                        "title": "테스트 이름 : TOEIC, TOEIC (Bridge), TOEIC (Speaking, Writing), TOEIC (Writing), TSC 중국어 말하기 시험, JPT, SJPT 일본어 말하기 시험",
+                                                        "isScrap": "true or false"
+                                                    }
+                                                ]
+                                            }
                                         }
                                     },
                                     "NoKeyword": {
@@ -4122,6 +4079,10 @@
                                     "qnetData": {
                                         "summary": "자격증 데이터",
                                         "value": {
+                                            "keyword": [
+                                                "정보통신",
+                                                "환경.에너지"
+                                            ],
                                             "data": [
                                                 {
                                                     "id": "자격증 id : adfhttwerqwrasxczx",

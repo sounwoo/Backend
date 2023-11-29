@@ -52,7 +52,7 @@ export class UserService {
                 id,
             },
             select: {
-                interests: {
+                interestKeyword: {
                     include: {
                         interest: true,
                         keyword: true,
@@ -63,7 +63,7 @@ export class UserService {
 
         let keywords: string[] = [];
 
-        result!.interests.forEach(
+        result!.interestKeyword.forEach(
             (el) =>
                 el.interest.interest === path &&
                 keywords.push(el.keyword.keyword),
@@ -101,12 +101,11 @@ export class UserService {
 
     saveInterestKeyword({
         prisma,
-        interests,
+        interestKeyword,
         id,
     }: ISaveInterestKeyword): Promise<void[][]> {
         return Promise.all(
-            interests.map(async (el) => {
-                const [interest, keywords] = Object.entries(el)[0];
+            interestKeyword.map(async ({ interest, keyword }) => {
                 const createdInterest = await prisma.interest.upsert({
                     where: { interest },
                     update: {},
@@ -114,7 +113,7 @@ export class UserService {
                 });
 
                 return Promise.all(
-                    keywords.map(async (keyword: string) => {
+                    keyword.map(async (keyword: string) => {
                         const createdKeyword = await prisma.keyword.upsert({
                             where: { keyword },
                             update: {},
@@ -139,7 +138,7 @@ export class UserService {
                 email,
             },
             include: {
-                interests: {
+                interestKeyword: {
                     include: {
                         interest: true,
                         keyword: true,
@@ -157,7 +156,7 @@ export class UserService {
             },
             include: {
                 communities: true,
-                interests: true,
+                interestKeyword: true,
             },
         });
         if (!isUser) {
@@ -173,7 +172,7 @@ export class UserService {
                 email: true,
                 profileImage: true,
                 nickname: true,
-                interests: {
+                interestKeyword: {
                     select: {
                         interest: { select: { interest: true } },
                         keyword: { select: { keyword: true } },
@@ -183,7 +182,7 @@ export class UserService {
         });
 
         const interestKeyword: interestKeywordType[] = [];
-        profile?.interests.map((el) => {
+        profile?.interestKeyword.map((el) => {
             const { interest, keyword } = el;
             const isInterest = interestKeyword.find(
                 (item: interestKeywordType) =>
@@ -258,7 +257,7 @@ export class UserService {
     }
 
     async createUser({ createDTO }: IUserCreateDTO): Promise<User['id']> {
-        const { interests, major, ...userData } = createDTO;
+        const { interestKeyword, major, ...userData } = createDTO;
 
         const { mainMajor, subMajor } = major;
 
@@ -292,7 +291,7 @@ export class UserService {
             });
             await this.saveInterestKeyword({
                 prisma,
-                interests,
+                interestKeyword,
                 id: user.id,
             });
             return user.id;
@@ -300,13 +299,13 @@ export class UserService {
     }
 
     async updateProfile({ id, updateDTO }: IUpdateProfile): Promise<User> {
-        const { interests, ...data } = updateDTO;
+        const { interestKeyword, ...data } = updateDTO;
 
         const chkUser = await this.isUserByID(id);
 
         data.nickname && (await this.isNickname(data.nickname));
 
-        if (interests) {
+        if (interestKeyword) {
             await this.prisma.userInterest.deleteMany({
                 where: { userId: id },
             });
@@ -315,7 +314,7 @@ export class UserService {
                 .$transaction(async (prisma) => {
                     await this.saveInterestKeyword({
                         prisma,
-                        interests,
+                        interestKeyword,
                         id: chkUser.id,
                     });
                 })
@@ -326,7 +325,7 @@ export class UserService {
             where: { id },
             data,
             include: {
-                interests: {
+                interestKeyword: {
                     include: {
                         interest: true,
                         keyword: true,
@@ -430,6 +429,7 @@ export class UserService {
                                   enterprise: 'YBM',
                                   ...data,
                                   title: languageTitle(test),
+                                  isScrap: true,
                               };
                           }
                           if (path === 'qnet') {
@@ -438,15 +438,17 @@ export class UserService {
                               return {
                                   mainImage: process.env.QNET_IMAGE,
                                   id: el._id,
-                                  period: schedule.wtPeriod,
+                                  period: schedule.wtPeriod.split('[')[0],
                                   examDate: schedule.wtDday,
                                   ...el._source,
+                                  isScrap: true,
                               };
                           }
                           return {
                               id: el._id,
                               ...rest,
                               Dday: getDday({ period }),
+                              isScrap: true,
                           };
                       })
                     : null;

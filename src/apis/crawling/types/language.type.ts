@@ -9,6 +9,7 @@ export interface LanguageType {
     closeDate: string;
     sortDate: Date;
     scrap: number;
+    title?: string;
 }
 
 export interface LanguagefindeManyType extends Omit<LanguageType, 'detail'> {}
