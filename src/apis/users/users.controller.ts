@@ -289,7 +289,7 @@ class UserController {
         const data = await this.userService.findManyThermometer(id);
 
         res.status(200).json({
-            data,
+            ...data,
         });
     }
 

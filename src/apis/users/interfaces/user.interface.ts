@@ -117,3 +117,31 @@ export interface IThermometerPatch {
         score?: UserLanguage['score'];
     };
 }
+
+export interface ITransData {
+    field: string;
+    activeTitle: string;
+}
+
+export interface IThermometerFindMany {
+    userCompetition: {
+        field: string;
+        activeTitle: string[];
+    };
+    userOutside: {
+        field: string;
+        activeTitle: string[];
+    };
+    userQnet: {
+        field: string;
+        activeTitle: string[];
+    };
+    userLanguage: {
+        field: string;
+        activeTitle: string[];
+    };
+    userIntern: {
+        field: string;
+        activeTitle: string[];
+    };
+}

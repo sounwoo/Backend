@@ -14,6 +14,8 @@ import {
     IGetUserScrap,
     IGetCalender,
     IThermometerPatch,
+    IThermometerFindMany,
+    ITransData,
 } from './interfaces/user.interface';
 import CustomError from '../../common/error/customError';
 import { Service } from 'typedi';
@@ -473,7 +475,6 @@ export class UserService {
     async delete(email: User['email']): Promise<boolean> {
         const user = await this.findOneUserByEmail(email);
         const qqq = await this.prisma.user.delete({ where: { id: user?.id } });
-        console.log(qqq);
         return true;
     }
 
@@ -574,37 +575,63 @@ export class UserService {
         );
     }
 
-    async findManyThermometer(id: string): Promise<any> {
-        return await this.prisma.user.findMany({
+    async findManyThermometer(id: string): Promise<IThermometerFindMany> {
+        const userData = await this.prisma.user.findMany({
             where: { id },
             select: {
                 userCompetition: {
                     select: {
+                        field: true,
                         activeTitle: true,
                     },
                 },
                 userOutside: {
                     select: {
+                        field: true,
                         activeTitle: true,
                     },
                 },
                 userQnet: {
                     select: {
+                        field: true,
                         activeTitle: true,
                     },
                 },
                 userLanguage: {
                     select: {
+                        field: true,
                         activeTitle: true,
                     },
                 },
                 userIntern: {
                     select: {
+                        field: true,
                         activeTitle: true,
                     },
                 },
             },
         });
+
+        const result = {
+            userCompetition: this.transData(
+                userData[0].userCompetition,
+                '공모전',
+            ),
+            userOutside: this.transData(userData[0].userOutside, '대외활동'),
+            userQnet: this.transData(userData[0].userQnet, '자격증'),
+            userLanguage: this.transData(userData[0].userLanguage, '어학'),
+            userIntern: this.transData(userData[0].userIntern, '인턴'),
+        };
+
+        return result;
+    }
+
+    private transData(userData: ITransData[], field: string) {
+        const activeTitle = userData.map((data) => data.activeTitle);
+        return {
+            field,
+            activeTitle,
+        };
     }
 
     async findPathThermometer({
@@ -628,8 +655,6 @@ export class UserService {
                 },
             },
         });
-
-        console.log(users[0]);
 
         return users[0][ThermometerPaths[path]].map((user) => ({
             ...user,
