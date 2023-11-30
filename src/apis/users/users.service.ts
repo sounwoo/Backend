@@ -430,6 +430,7 @@ export class UserService {
                                   ...data,
                                   title: languageTitle(test),
                                   isScrap: true,
+                                  path,
                               };
                           }
                           if (path === 'qnet') {
@@ -442,6 +443,7 @@ export class UserService {
                                   examDate: schedule.wtDday,
                                   ...el._source,
                                   isScrap: true,
+                                  path,
                               };
                           }
                           return {
@@ -449,6 +451,7 @@ export class UserService {
                               ...rest,
                               Dday: getDday({ period }),
                               isScrap: true,
+                              path,
                           };
                       })
                     : null;
