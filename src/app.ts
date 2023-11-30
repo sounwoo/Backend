@@ -19,6 +19,7 @@ app.use(
         origin: [
             'http://localhost:5173',
             'https://netlify.com/',
+            'https://quiet-chebakia-eb017d.netlify.app/'
         ],
         credentials: true,
     }),
