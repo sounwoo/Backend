@@ -343,6 +343,7 @@ export class UserService {
         const { column, id: _scrapId } = scrapData(path);
 
         const chkScrap = await this.prisma.user.findFirst({
+            where: { id },
             include: {
                 [column]: {
                     where: {
