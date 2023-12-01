@@ -41,11 +41,16 @@ export class PathCrawling {
                             `https://linkareer.com/activity/${el.id}`,
                         );
                         const $ = cheerio.load(result.data);
-                        $(`h3.${detailClass}`).each((index, el) => {
+
+                        $(
+                            'div.ActivityInformationFieldBase__StyledWrapper-sc-735b9a83-0.bcYeyS',
+                        ).each((index, el) => {
                             const key = Object.keys(dataType)[index];
+
                             if (key) {
-                                dataType[key as keyof typeof dataType] =
-                                    $(el).text();
+                                dataType[key as keyof typeof dataType] = $(el)
+                                    .find('h3')
+                                    .text();
                             }
                         });
 
@@ -74,7 +79,7 @@ export class PathCrawling {
                                             30,
                                     );
                                 }
-                                const field = $('span.jss17')
+                                const field = $('span.jss12')
                                     .map((_, el) => $(el).html())
                                     .get()
                                     .join(', ');
@@ -103,7 +108,7 @@ export class PathCrawling {
                             ...dataType,
                             ...(dataType.scale && { scale: +dataType.scale }),
                             detail: $(
-                                'div.ActivityDetailTabContent__StyledWrapper-sc-b6244026-0.lcsRCH',
+                                'div.ActivityDetailTabContent__StyledWrapper-sc-eaa4a9dc-0.jxHKHi',
                             ).html(),
                         };
 

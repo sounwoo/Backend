@@ -104,7 +104,7 @@ class CommunityController {
         res.status(200).json({
             data: toggleLikes.length
                 ? { count: toggleLikes.length, toggleLikes }
-                : null,
+                : 0,
         });
     }
 
@@ -135,7 +135,7 @@ class CommunityController {
         res.status(200).json({
             data: commentLike.length
                 ? { count: commentLike.length, commentLike }
-                : null,
+                : 0,
         });
     }
 }
