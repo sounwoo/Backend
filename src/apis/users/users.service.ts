@@ -354,6 +354,7 @@ export class UserService {
         });
 
         const chkPlusMinus = chkScrap?.[column].length;
+
         const plusMinus = `ctx._source.scrap${chkPlusMinus ? '--' : '++'}`;
 
         await Promise.all([
