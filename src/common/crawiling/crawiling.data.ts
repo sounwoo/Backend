@@ -2,7 +2,7 @@ import { LanguageType } from '../../apis/crawling/types/language.type';
 
 export const linkareerType = (path: string, i: number) => {
     let url, dataType;
-    let interestsType = 'jss14';
+    let interestsType = 'jss9';
     let detailClass = 'jss6';
     let mainImageType = 'card-image';
 
@@ -57,7 +57,7 @@ export const linkareerType = (path: string, i: number) => {
                 benefits: '',
                 interests: '',
             };
-            interestsType = 'jss13';
+            interestsType = 'jss8';
 
             break;
     }
