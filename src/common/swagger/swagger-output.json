@@ -690,7 +690,7 @@
                                                 "percent": 0
                                             },
                                             "outside": {
-                                                "barType": "outisde",
+                                                "barType": "outside",
                                                 "percent": 0
                                             },
                                             "qnet": {
@@ -705,7 +705,7 @@
                                                 "barType": "intern",
                                                 "percent": 0
                                             },
-                                            "sum": 40
+                                            "sum": 0
                                         }
                                     ]
                                 }
