@@ -278,9 +278,9 @@ class UserController {
 
     async getCount(req: Request, res: Response) {
         const { id } = req.user as idType;
-
+        const data = await this.userService.getCount(id);
         res.status(200).json({
-            data: await this.userService.getCount(id),
+            ...data,
         });
     }
 

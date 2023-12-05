@@ -668,6 +668,63 @@
                 }
             }
         },
+        "/user/getCount": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "유저의 각 활동내역별 점수 계산",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "응답 성공",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "data": [
+                                        {
+                                            "competition": {
+                                                "barType": "competition",
+                                                "percent": 0
+                                            },
+                                            "outside": {
+                                                "barType": "outisde",
+                                                "percent": 0
+                                            },
+                                            "qnet": {
+                                                "barType": "qnet",
+                                                "percent": 0
+                                            },
+                                            "language": {
+                                                "barType": "language",
+                                                "percent": 0
+                                            },
+                                            "intern": {
+                                                "barType": "intern",
+                                                "percent": 0
+                                            },
+                                            "sum": 40
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "서버 에러",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "서버 문제"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/findManyThermometer": {
             "get": {
                 "tags": ["Users"],
