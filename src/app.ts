@@ -66,7 +66,7 @@ kakao();
 app.use(errorHandler);
 
 app.get('/', (_, res) => {
-    res.send('서버 연결 완료!!!!');
+    res.send('서버 연결 완료!!!!!');
 });
 
 app.listen(process.env.PORT, () => {
