@@ -6,7 +6,7 @@ import {
     splitMapType,
 } from '../types';
 
-export const calanderDate = async ({
+export const calandarDate = async ({
     path,
     year,
     month,

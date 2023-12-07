@@ -11,7 +11,7 @@ import {
 import { CreateUserDTO } from '../apis/users/dto/create-user.dto';
 import { Path, paths } from './crawiling/interface';
 import { UpdateUserDTO } from '../apis/users/dto/update-user.dto';
-import { GetCalenderDTO } from '../apis/users/dto/getCalender.dto';
+import { GetCalendarDTO } from '../apis/users/dto/getCalendar.dto';
 
 export type email = {
     email: CreateUserDTO['email'];
@@ -92,7 +92,7 @@ export type createDTOType = CreateUserDTO;
 
 export type updateDTOType = UpdateUserDTO;
 
-export type getCalenderDTOType = GetCalenderDTO;
+export type getCalendarDTOType = GetCalendarDTO;
 
 export type validateTokenType = {
     token: number;

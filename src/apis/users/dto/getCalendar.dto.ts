@@ -1,13 +1,13 @@
 import { IsString } from 'class-validator';
 
-export class GetCalenderDTO {
+export class GetCalendarDTO {
     @IsString()
     year: string;
 
     @IsString()
     month: string;
 
-    constructor(data: GetCalenderDTO) {
+    constructor(data: GetCalendarDTO) {
         this.year = data.year;
         this.month = data.month;
     }

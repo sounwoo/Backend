@@ -1,6 +1,6 @@
 import { paths } from '../crawiling/interface';
 
-export const calenderData = (path: paths['path']) => {
+export const calendarData = (path: paths['path']) => {
     const common = ['title', 'period'];
 
     const data = {

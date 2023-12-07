@@ -48,7 +48,7 @@ export interface IScrapping {
     scrappingDTO: ScrappingDTO;
 }
 
-export interface IGetCalender {
+export interface IGetCalendar {
     id: User['id'];
     year: string;
     month: string;

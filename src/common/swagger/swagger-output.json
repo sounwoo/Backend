@@ -2058,7 +2058,7 @@
                 }
             }
         },
-        "/user/getCalender": {
+        "/user/getCalendar": {
             "get": {
                 "tags": ["Users"],
                 "summary": "캘린더 조회하기",
