@@ -12,7 +12,7 @@ import {
     ISaveInterestKeyword,
     IScrapping,
     IGetUserScrap,
-    IGetCalender,
+    IGetCalendar,
     IThermometerPatch,
     IThermometerFindMany,
     ITransData,
@@ -32,8 +32,8 @@ import {
     userProfileType,
 } from '../../common/types';
 import { paths } from '../../common/crawiling/interface';
-import { calenderData } from '../../common/util/calender_data';
-import { calanderDate } from '../../common/util/getCalenderData';
+import { calendarData } from '../../common/util/calendar_data';
+import { calandarDate } from '../../common/util/getCalendarData';
 import { getDday } from '../../common/util/getDday';
 
 @Service()
@@ -682,10 +682,11 @@ export class UserService {
         }
     }
 
-    async getCalender({ id, year, month }: IGetCalender) {
+    async getCalendar({ id, year, month }: IGetCalendar) {
         await this.isUserByID(id);
+        month = (Number(month) + 1).toString();
 
-        const calender: {
+        const calendar: {
             [key: string]: [
                 {
                     id: string;
@@ -704,7 +705,7 @@ export class UserService {
                     await this.elastic
                         .search({
                             index: el,
-                            _source_includes: calenderData(el as paths['path'])
+                            _source_includes: calendarData(el as paths['path'])
                                 .info,
                             body: {
                                 query: {
@@ -725,7 +726,7 @@ export class UserService {
                                     participationPeriod,
                                 } = info._source;
 
-                                const result = await calanderDate({
+                                const result = await calandarDate({
                                     path: el as paths['path'],
                                     year,
                                     month,
@@ -740,9 +741,9 @@ export class UserService {
                                 });
 
                                 return result.map((final: any) => {
-                                    calender[final.targetDate] =
-                                        calender[final.targetDate] || [];
-                                    return calender[final.targetDate].push({
+                                    calendar[final.targetDate] =
+                                        calendar[final.targetDate] || [];
+                                    return calendar[final.targetDate].push({
                                         id: info._id,
                                         title:
                                             el !== 'language'
@@ -756,7 +757,7 @@ export class UserService {
                 },
             ),
         );
-        return calender;
+        return calendar;
     }
 
     async patchThermometer({

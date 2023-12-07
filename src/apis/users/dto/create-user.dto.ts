@@ -23,7 +23,7 @@ export class CreateUserDTO {
     name: User['name'];
 
     @Length(2, 10)
-    @Matches(/^[a-zA-Z가-힣]+$/)
+    @Matches(/^[a-zA-Z가-힣0-9]+$/)
     nickname: User['nickname'];
 
     @IsString()

@@ -133,10 +133,10 @@ class UserController {
         );
 
         this.router.get(
-            '/getCalender',
-            Validate.getCalender,
+            '/getCalendar',
+            Validate.getCalendar,
             AccessGuard.handle,
-            asyncHandler(this.getCalender.bind(this)),
+            asyncHandler(this.getCalendar.bind(this)),
         );
 
         this.router.patch(
@@ -306,12 +306,12 @@ class UserController {
         });
     }
 
-    async getCalender(req: Request, res: Response) {
+    async getCalendar(req: Request, res: Response) {
         // #swagger.tags = ['User']
         const { id } = req.user as idType;
         const { year, month } = req.query as yearMonthType;
         res.status(200).json({
-            data: await this.userService.getCalender({
+            data: await this.userService.getCalendar({
                 id,
                 year,
                 month,
