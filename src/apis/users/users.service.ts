@@ -16,6 +16,7 @@ import {
     IThermometerPatch,
     IThermometerFindMany,
     ITransData,
+    IFindThermometerTopPercentage,
 } from './interfaces/user.interface';
 import CustomError from '../../common/error/customError';
 import { Service } from 'typedi';
@@ -35,6 +36,7 @@ import { paths } from '../../common/crawiling/interface';
 import { calenderData } from '../../common/util/calender_data';
 import { calanderDate } from '../../common/util/getCalenderData';
 import { getDday } from '../../common/util/getDday';
+import { type } from 'os';
 
 @Service()
 export class UserService {
@@ -784,5 +786,17 @@ export class UserService {
         });
 
         return true;
+    }
+
+    async findThermometerTopPercentage(
+        id: string,
+    ): Promise<IFindThermometerTopPercentage | null> {
+        await this.isUserByID(id);
+        return await this.prisma.user.findUnique({
+            where: { id },
+            select: {
+                top: true,
+            },
+        });
     }
 }

@@ -705,7 +705,8 @@
                                                 "barType": "intern",
                                                 "percent": 0
                                             },
-                                            "sum": 0
+                                            "sum": 0,
+                                            "top": 100
                                         }
                                     ]
                                 }

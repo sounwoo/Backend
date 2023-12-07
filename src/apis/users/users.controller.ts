@@ -279,8 +279,10 @@ class UserController {
     async getCount(req: Request, res: Response) {
         const { id } = req.user as idType;
         const data = await this.userService.getCount(id);
+        const top = await this.userService.findThermometerTopPercentage(id);
         res.status(200).json({
             ...data,
+            ...top,
         });
     }
 
