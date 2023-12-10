@@ -28,7 +28,7 @@ export const percentage = (user: IThermometerUser): PercentageType => {
             percent: competitionPercentage,
         },
         outside: {
-            barType: 'outisde',
+            barType: 'outside',
             percent: outsidePercentage,
         },
         qnet: {

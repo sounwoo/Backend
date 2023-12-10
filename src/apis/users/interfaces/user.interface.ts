@@ -145,3 +145,7 @@ export interface IThermometerFindMany {
         activeTitle: string[];
     };
 }
+
+export interface IFindThermometerTopPercentage {
+    top: User['top'];
+}
