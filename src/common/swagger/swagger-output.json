@@ -2527,6 +2527,16 @@
                             "example": "서울,대전"
                         },
                         "description": "지역 검색"
+                    },
+                    {
+                        "name": "month",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "month",
+                            "example": "3,6"
+                        },
+                        "description": "활동 기간 (이상,이하)"
                     }
                 ],
                 "responses": {
@@ -2665,6 +2675,16 @@
                             "example": "활동비,사은품 지급"
                         },
                         "description": " 수상혜택 , 로 구분"
+                    },
+                    {
+                        "name": "target",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "target",
+                            "example": "직장인/일반인"
+                        },
+                        "description": "지원대상 , 로 구분"
                     },
                     {
                         "name": "scale",
