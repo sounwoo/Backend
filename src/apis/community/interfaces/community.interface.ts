@@ -1,3 +1,4 @@
+import { Comment } from '@prisma/client';
 import { idType } from '../../../common/types';
 import { CreateCommunityCommentDTO } from '../dto/create.comment.input';
 import { CommentLikeCommunityDTO } from '../dto/create.comment.like.input';
@@ -19,3 +20,12 @@ export interface ICommentLikeCommunity extends CommentLikeCommunityDTO {
 export interface ICreateCommunityComment extends CreateCommunityCommentDTO {
     userId: idType['id'];
 }
+
+export interface IPatchCommunityComment extends ICreateCommunityComment {}
+
+export interface IDeleteCommunityComment {
+    userId: idType['id'];
+    commentId: Comment['id'];
+}
+
+export type CommentIdType = { commentId: string };

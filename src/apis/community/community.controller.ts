@@ -8,6 +8,8 @@ import Validate from '../../common/validator/validateDTO';
 import { FindManyCommunityDTO } from './dto/findMany.community';
 import { CreateCommunityDTO } from './dto/create.input';
 import { CreateCommunityCommentDTO } from './dto/create.comment.input';
+import { PatchCommunityCommentDTO } from './dto/patch.comment.input';
+import { CommentIdType } from './interfaces/community.interface';
 
 class CommunityController {
     router = Router();
@@ -47,6 +49,17 @@ class CommunityController {
             Validate.createCommunityComment,
             accessGuard.handle,
             asyncHandler(this.createComment.bind(this)),
+        );
+        this.router.patch(
+            '/comment/patch',
+            Validate.patchCommunityComment,
+            accessGuard.handle,
+            asyncHandler(this.patchComment.bind(this)),
+        );
+        this.router.delete(
+            '/comment/delete/:commentId',
+            accessGuard.handle,
+            asyncHandler(this.deleteComment.bind(this)),
         );
 
         this.router.patch(
@@ -119,6 +132,31 @@ class CommunityController {
 
         res.status(200).json({
             data: comments.length ? { count: comments.length, comments } : null,
+        });
+    }
+
+    async patchComment(req: Request, res: Response) {
+        // #swagger.tags = ['Community']
+        const { id: userId } = req.user as idType;
+        const comment = await this.communityService.patchComment({
+            userId,
+            ...(req.body as PatchCommunityCommentDTO),
+        });
+        res.status(200).json({
+            data: comment,
+        });
+    }
+
+    async deleteComment(req: Request, res: Response) {
+        // #swagger.tags = ['Community']
+        const { id: userId } = req.user as idType;
+        const { commentId } = req.params as CommentIdType;
+
+        res.status(200).json({
+            data: await this.communityService.deleteComment({
+                userId,
+                commentId,
+            }),
         });
     }
 

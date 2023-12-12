@@ -7,10 +7,13 @@ import {
     ICommunityCreate,
     ICommunityToggleLike,
     ICreateCommunityComment,
+    IDeleteCommunityComment,
+    IPatchCommunityComment,
 } from './interfaces/community.interface';
 import { idType } from '../../common/types';
 import { FindManyCommunityDTO } from './dto/findMany.community';
 import { CommunityFindManyType } from '../crawling/interfaces/returnType/bestData.interface';
+import CustomError from '../../common/error/customError';
 
 @Service()
 export class CommunityService {
@@ -76,7 +79,11 @@ export class CommunityService {
         });
     }
 
-    findOne({ id }: idType): Promise<Community> {
+    async findOne({ id }: idType): Promise<Community> {
+        const data = await this.prisma.community.findUnique({ where: { id } });
+
+        if (!data) throw new CustomError('존재하지 않는 게시물 입니다.', 404);
+
         return this.prisma.community.update({
             where: { id },
             data: {
@@ -137,16 +144,24 @@ export class CommunityService {
             .then((el) => el.communitiyLikes);
     }
 
+    async findeOneComment({ id }: { id: string }): Promise<Comment | null> {
+        const data = await this.prisma.comment.findUnique({ where: { id } });
+
+        if (!data) throw new CustomError('존재하지 않는 댓글 입니다.', 404);
+
+        return data;
+    }
+
     async createComment({
         userId,
-        communityId,
+        id,
         comment,
     }: ICreateCommunityComment): Promise<Comment[]> {
         await this.userService.isUserByID(userId);
 
         return await this.prisma.community
             .update({
-                where: { id: communityId },
+                where: { id },
                 data: {
                     comment: { increment: 1 },
                     comments: {
@@ -168,6 +183,34 @@ export class CommunityService {
                 },
             })
             .then((el) => el.comments);
+    }
+
+    async patchComment({
+        userId,
+        id,
+        comment,
+    }: IPatchCommunityComment): Promise<Comment> {
+        await this.userService.isUserByID(userId);
+        await this.findeOneComment({ id });
+        return this.prisma.comment.update({
+            where: { id },
+            data: { comment },
+        });
+    }
+
+    async deleteComment({
+        userId,
+        commentId,
+    }: IDeleteCommunityComment): Promise<boolean> {
+        await this.userService.isUserByID(userId);
+
+        await this.findeOneComment({ id: commentId });
+
+        const result = await this.prisma.comment.deleteMany({
+            where: { AND: [{ id: commentId, userId }] },
+        });
+
+        return !!result;
     }
 
     async commentLike({
