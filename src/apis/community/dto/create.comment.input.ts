@@ -1,15 +1,15 @@
 import { IsString } from 'class-validator';
-import { Comment, Community, User } from '@prisma/client';
+import { Comment, Community } from '@prisma/client';
 
 export class CreateCommunityCommentDTO {
     @IsString()
-    communityId: Community['id'];
+    id: Community['id'];
 
     @IsString()
     comment: Comment['comment'];
 
     constructor(data: CreateCommunityCommentDTO) {
-        this.communityId = data.communityId;
+        this.id = data.id;
         this.comment = data.comment;
     }
 }

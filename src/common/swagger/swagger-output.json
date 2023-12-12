@@ -4674,7 +4674,7 @@
                                         "path": "경로 : 공모전/대외활동",
                                         "title": "제목 : 공모전 활동",
                                         "detail": "상세내용 : html코드",
-                                        "createAt": "등록 시간 : 2023-09-16",
+                                        "date": "등록 시간 : 2023-09-16",
                                         "view": 0,
                                         "likeCount": 0,
                                         "commentCount": 0,
@@ -4839,7 +4839,7 @@
                                                     "id": "커뮤니티 id : 255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                     "title": "제목 : 공모전 활동",
                                                     "detail": "상세내용 : html코드",
-                                                    "createAt": "등록 시간 : 2023-09-16",
+                                                    "date": "등록 시간 : 2023-09-16",
                                                     "view": 0,
                                                     "likeCount": 0,
                                                     "commentCount": 0,
@@ -4973,7 +4973,7 @@
                                                 "id": "커뮤니티 id : 255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목 : 공모전 활동",
                                                 "detail": "상세내용 : html코드",
-                                                "createAt": "등록 시간 : 2023-09-16",
+                                                "date": "등록 시간 : 2023-09-16",
                                                 "view": 0,
                                                 "likeCount": 0,
                                                 "commentCount": 0,
@@ -5015,7 +5015,7 @@
                                                 "id": "커뮤니티 id : 255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목 : 공모전 활동",
                                                 "detail": "상세내용 : html코드",
-                                                "createAt": "등록 시간 : 2023-09-16",
+                                                "date": "등록 시간 : 2023-09-16",
                                                 "view": 0,
                                                 "likeCount": 0,
                                                 "commentCount": 0,
@@ -5102,7 +5102,7 @@
                                                             "comment": {
                                                                 "type": "string"
                                                             },
-                                                            "createAt": {
+                                                            "date": {
                                                                 "type": "string"
                                                             },
                                                             "user": {
@@ -5410,7 +5410,7 @@
                                             {
                                                 "id": "040437ac-c725-4b99-9434-d10087158b90",
                                                 "comment": "댓글 내용",
-                                                "createAt": "2023-09-22T14:39:22.000Z",
+                                                "date": "2023-09-22T14:39:22.000Z",
                                                 "userId": "a134c044-7acd-4685-8a60-2c7537417508",
                                                 "communityId": "1f058c7e-da22-4f5d-9ef9-b560d83d409d",
                                                 "user": {
@@ -5445,7 +5445,7 @@
                                                             "comment": {
                                                                 "type": "string"
                                                             },
-                                                            "createAt": {
+                                                            "date": {
                                                                 "type": "date"
                                                             },
                                                             "userId": {
@@ -5527,10 +5527,190 @@
                 }
             }
         },
+        "/community/comment/patch": {
+            "patch": {
+                "tags": ["Community"],
+                "summary": "취준job담 댓글 수정",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "example": "댓글 id"
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "댓글 수정 내용"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "응답 성공",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "data": {
+                                        "id": "11331306-b92b-407b-812e-dac5456ab8e2",
+                                        "comment": "댓글 내용 수정",
+                                        "date": "2023-12-12T05:00:49.000Z",
+                                        "userId": "69ab1c0b-d4ef-4294-a3a1-669ccea7165e",
+                                        "communityId": "23949f8c-1215-4345-baa3-9d9c48dca80f"
+                                    }
+                                },
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "comment": {
+                                                    "type": "string"
+                                                },
+                                                "date": {
+                                                    "type": "date"
+                                                },
+                                                "userId": {
+                                                    "type": "string"
+                                                },
+                                                "communityId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "noData": {
+                                        "summary": "일치하는 id가 없는 경우 / 일치하는 댓글 id 없는경우",
+                                        "value": {
+                                            "data": "id가 일치하는 유저가 없습니다 / 존재하지 않는 댓글입니다."
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "서버 에러",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "서버 문제"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/community/comment/delete/{commentId}": {
+            "delete": {
+                "tags": ["Community"],
+                "summary": "취준job담 댓글 삭제",
+                "parameters": [
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "commentId",
+                            "example": "255617b0-446c-477e-96c9-cb9fe54bc6cc"
+                        },
+                        "description": "취준job담 댓글 id"
+                    }
+                ],
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "응답 성공",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "data": "true"
+                                },
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "true": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "noData": {
+                                        "summary": "일치하는 id가 없는 경우 / 일치하는 댓글 id 없는경우",
+                                        "value": {
+                                            "data": "id가 일치하는 유저가 없습니다 / 존재하지 않는 댓글입니다."
+                                        }
+                                    }
+                                },
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "서버 에러",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "서버 문제"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/community/comment/like/{id}": {
             "patch": {
                 "tags": ["Community"],
-                "summary": "취준job담 좋아요(등록/취소) ",
+                "summary": "취준job담 댓글 좋아요(등록/취소) ",
                 "parameters": [
                     {
                         "name": "id",
