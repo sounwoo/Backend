@@ -49,7 +49,7 @@ export class CrawlingService {
         const must: object[] = [];
         for (const key in _data) {
             const value = datas[key];
-            if (key === 'scale') {
+            if (key === 'scale' || key === 'month') {
                 const [start, end] = value.split(',');
                 const scaleKeyword = !end
                     ? { gte: +start }
