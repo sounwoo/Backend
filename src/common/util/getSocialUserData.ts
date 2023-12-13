@@ -3,25 +3,25 @@ import { providerTokenType } from '../types';
 import CustomError from '../error/customError';
 
 export const socialEmail = async ({ provider, token }: providerTokenType) => {
-    if (provider === 'google') {
-        const tokenEndpoint = 'https://oauth2.googleapis.com/token';
-        const code = token;
-        const response = await axios.post(
-            tokenEndpoint,
-            {
-                code,
-                client_id: process.env.GOOGLE_CLIENT_ID,
-                client_secret: process.env.GOOGLE_CLIENT_SECRET,
-                redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-                grant_type: 'authorization_code',
-            },
-            {
-                headers: { 'content-type': 'x-www-form-urlencoded' },
-            },
-        );
+    // if (provider === 'google') {
+    //     const tokenEndpoint = 'https://oauth2.googleapis.com/token';
+    //     const code = token;
+    //     const response = await axios.post(
+    //         tokenEndpoint,
+    //         {
+    //             code,
+    //             client_id: process.env.GOOGLE_CLIENT_ID,
+    //             client_secret: process.env.GOOGLE_CLIENT_SECRET,
+    //             redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+    //             grant_type: 'authorization_code',
+    //         },
+    //         {
+    //             headers: { 'content-type': 'x-www-form-urlencoded' },
+    //         },
+    //     );
 
-        token = response.data.access_token;
-    }
+    //     token = response.data.access_token;
+    // }
 
     const data =
         provider === 'kakao'
