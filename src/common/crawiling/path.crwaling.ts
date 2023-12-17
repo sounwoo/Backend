@@ -101,14 +101,14 @@ export class PathCrawling {
                         }
 
                         const data = {
-                            title: $('h2.title').text(),
+                            title: $('h1.title').text(),
                             view: +String($('span.count').html()),
                             mainImage: $(`img.${mainImageType}`).attr('src'),
                             enterprise: $('h2.organization-name').text(),
                             ...dataType,
                             ...(dataType.scale && { scale: +dataType.scale }),
                             detail: $(
-                                'div.ActivityDetailTabContent__StyledWrapper-sc-eaa4a9dc-0.jxHKHi',
+                                'div.ActivityDetailTabContent__StyledWrapper-sc-e04a1d2-0.fnlchx',
                             ).html(),
                         };
 
