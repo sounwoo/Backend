@@ -2534,9 +2534,9 @@
                         "schema": {
                             "type": "string",
                             "format": "month",
-                            "example": "3,6"
+                            "example": "3개월 이하,3개월~6개월"
                         },
-                        "description": "활동 기간 (이상,이하)"
+                        "description": "활동 기간 (복수형태 ,로구분)"
                     }
                 ],
                 "responses": {
@@ -2692,9 +2692,9 @@
                         "schema": {
                             "type": "string",
                             "format": "scale",
-                            "example": "100"
+                            "example": "1천만원 미만,3천만원~5천만원"
                         },
-                        "description": "시상 규모 1억단위 10000 / 이상,이하"
+                        "description": "시상 규모 (복수 형태 ,로 구분)"
                     }
                 ],
                 "responses": {
@@ -3099,14 +3099,14 @@
                         "description": "대분류"
                     },
                     {
-                        "name": "subCategory",
+                        "name": "title",
                         "in": "query",
                         "schema": {
                             "type": "string",
-                            "format": "subCategory",
-                            "example": "환경"
+                            "format": "title",
+                            "example": "식육가공기사"
                         },
-                        "description": "중분류"
+                        "description": "에너지산업기사"
                     }
                 ],
                 "responses": {

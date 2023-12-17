@@ -29,6 +29,7 @@ import {
     myKeywordCrawlingObjType,
     myKeywordCrawlingReturnType,
 } from './types/myKeywordCrawling.type';
+import { range } from '../../common/util/range';
 
 @Service()
 export class CrawlingService {
@@ -47,14 +48,11 @@ export class CrawlingService {
 
         const datas: { [key: string]: string } = { ..._data };
         const must: object[] = [];
+        let should: object[] = [];
         for (const key in _data) {
             const value = datas[key];
             if (key === 'scale' || key === 'month') {
-                const [start, end] = value.split(',');
-                const scaleKeyword = !end
-                    ? { gte: +start }
-                    : { gte: +start || 0, lte: +end };
-                must.push({ range: { [key]: scaleKeyword } });
+                should = range({ key, arr: value.split(',') });
             } else {
                 must.push({
                     match: { [key]: value.replace(',', ' ') },
@@ -78,9 +76,12 @@ export class CrawlingService {
                               ]
                             : [{ view: { order: 'desc' } }],
                     query: {
-                        ...(must.length
+                        ...(must.length || should.length
                             ? {
-                                  bool: { must },
+                                  bool: {
+                                      must,
+                                      should,
+                                  },
                               }
                             : { match_all: {} }),
                     },

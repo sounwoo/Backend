@@ -1,7 +1,7 @@
 import { Path } from '../crawiling/interface';
 
 export const cludes = (path: Path['path'] | 'language'): string[] => {
-    const common = ['title', 'view', 'scrap'];
+    const common = ['title', 'view', 'scrap', 'month'];
     const qnetLanExcept = [...common, 'period', 'mainImage', 'enterprise'];
     const cludes = {
         ousideOrCompetition: [...qnetLanExcept],

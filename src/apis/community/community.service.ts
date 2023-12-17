@@ -104,6 +104,9 @@ export class CommunityService {
                             },
                         },
                     },
+                    orderBy: {
+                        date: 'desc',
+                    },
                 },
                 communitiyLikes: {
                     select: {
