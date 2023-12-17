@@ -59,7 +59,7 @@ export class CrawlingService {
                 });
             }
         }
-        console.log(should);
+
         return this.elastic
             .search({
                 index: `${path}*`,
