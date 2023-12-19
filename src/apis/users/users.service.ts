@@ -694,6 +694,7 @@ export class UserService {
                     id: string;
                     title: string;
                     status: string;
+                    path: string;
                 },
             ];
         } = {};
@@ -752,6 +753,7 @@ export class UserService {
                                                 ? info._source.title
                                                 : info._source.test,
                                         status: final.status,
+                                        path: el,
                                     });
                                 });
                             }),
