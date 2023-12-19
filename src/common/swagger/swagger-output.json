@@ -2101,19 +2101,22 @@
                                             {
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
-                                                "status": "open, close, exam"
+                                                "status": "open, close, exam",
+                                                "path": "competition, outside, qnet, intern, language"
                                             },
                                             {
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
-                                                "status": "open, close, exam"
+                                                "status": "open, close, exam",
+                                                "path": "competition, outside, qnet, intern, language"
                                             }
                                         ],
                                         "13": [
                                             {
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
-                                                "status": "open, close, exam"
+                                                "status": "open, close, exam",
+                                                "path": "competition, outside, qnet, intern, language"
                                             }
                                         ]
                                     }
@@ -2128,6 +2131,9 @@
                                             "type": "string"
                                         },
                                         "status": {
+                                            "type": "string"
+                                        },
+                                        "path": {
                                             "type": "string"
                                         }
                                     }
