@@ -1,9 +1,7 @@
 name: allinjob-ci-cd
 
 on:
-    push:
-        branches: [dev]
-    pull_request:
+    merge:
         branches: [dev]
 
 jobs:

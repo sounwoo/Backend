@@ -53,9 +53,23 @@ export class CrawlingService {
             const value = datas[key];
             if (key === 'scale' || key === 'month') {
                 should = range({ key, arr: value.split(',') });
-            } else {
+            } else if (path === 'qnet') {
                 must.push({
-                    match: { [key]: value.replace(',', ' ') },
+                    match: {
+                        [key]: {
+                            query: value.replace(',', ' '),
+                            operator: 'and',
+                        },
+                    },
+                });
+            } else {
+                should.push({
+                    match: {
+                        [key]: {
+                            query: value.replace(',', ' '),
+                            operator: 'and',
+                        },
+                    },
                 });
             }
         }
