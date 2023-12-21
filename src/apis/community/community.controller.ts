@@ -57,7 +57,7 @@ class CommunityController {
             asyncHandler(this.patchComment.bind(this)),
         );
         this.router.delete(
-            '/comment/delete/:commentId',
+            '/comment/delete',
             accessGuard.handle,
             asyncHandler(this.deleteComment.bind(this)),
         );
@@ -131,7 +131,7 @@ class CommunityController {
         });
 
         res.status(200).json({
-            data: comments.length ? { count: comments.length, comments } : null,
+            data: comments.length ? { count: comments.length, comments } : 0,
         });
     }
 
@@ -150,13 +150,14 @@ class CommunityController {
     async deleteComment(req: Request, res: Response) {
         // #swagger.tags = ['Community']
         const { id: userId } = req.user as idType;
-        const { commentId } = req.params as CommentIdType;
-
+        const { commentId, communityId } = req.body as CommentIdType;
+        const comment = await this.communityService.deleteComment({
+            userId,
+            commentId,
+            communityId,
+        });
         res.status(200).json({
-            data: await this.communityService.deleteComment({
-                userId,
-                commentId,
-            }),
+            data: comment.length ? comment : 0,
         });
     }
 
