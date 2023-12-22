@@ -107,37 +107,39 @@ export class CrawlingService {
                 return count
                     ? data.body.hits.total.value
                     : data.body.hits.hits.length
-                    ? data.body.hits.hits.map((el: any) => {
-                          const { closeDate, test, period, ...rest } =
-                              el._source;
+                      ? data.body.hits.hits.map((el: any) => {
+                            const { closeDate, test, period, ...rest } =
+                                el._source;
 
-                          if (path === 'intern' || path === 'qnet') {
-                              delete el._source.scrap,
-                                  path === 'intern'
-                                      ? delete el._source.Dday
-                                      : delete el._source.view;
-                          }
+                            if (path === 'intern' || path === 'qnet') {
+                                delete el._source.scrap,
+                                    path === 'intern'
+                                        ? delete el._source.Dday
+                                        : delete el._source.view;
+                            }
 
-                          return {
-                              id: el._id,
-                              ...rest,
-                              ...(path === 'intern' && {
-                                  closeDate: splitDate(period),
-                              }),
-                              ...(path === 'language' && {
-                                  title: languageTitle(test),
-                                  closeDate,
-                              }),
-                              ...(path === 'qnet' && {
-                                  ...examSchedulesSort(el),
-                              }),
-                              ...(path === 'competition' || path === 'outside'
-                                  ? { Dday: getDday({ period }) }
-                                  : undefined),
-                              ...(id && { isScrap: scrapIds.includes(el._id) }),
-                          };
-                      })
-                    : [];
+                            return {
+                                id: el._id,
+                                ...rest,
+                                ...(path === 'intern' && {
+                                    closeDate: splitDate(period),
+                                }),
+                                ...(path === 'language' && {
+                                    title: languageTitle(test),
+                                    closeDate,
+                                }),
+                                ...(path === 'qnet' && {
+                                    ...examSchedulesSort(el),
+                                }),
+                                ...(path === 'competition' || path === 'outside'
+                                    ? { Dday: getDday({ period }) }
+                                    : undefined),
+                                ...(id && {
+                                    isScrap: scrapIds.includes(el._id),
+                                }),
+                            };
+                        })
+                      : [];
             });
     }
 
@@ -149,76 +151,17 @@ export class CrawlingService {
         });
         if (!userKeyword) return [];
 
-        const { id, ..._data } = { ...data };
-
         const keyword = userKeyword.split(' ');
 
-        const obj: myKeywordCrawlingObjType = {
-            영어: [],
-            중국어: [],
-            일본어: [],
-        };
-
-        const languageResult: any = {};
-
-        if (data.path === 'language') {
-            keyword.forEach((el) => {
-                const classify = languageClassify(el as testType);
-                obj[classify].push(el);
-            });
-
-            const processLanguage = async (lanType: string) => {
-                const lan = obj[lanType];
-                if (lan.length) {
-                    languageResult[lanType] = languageResult[lanType] || {
-                        keyword: [],
-                        data: [],
-                    };
-
-                    if (!_data.count) {
-                        for (const lanItem of lan) {
-                            languageResult[lanType]['keyword'].push(
-                                languageTitle(lanItem as testType),
-                            );
-                        }
-                    } else delete languageResult[lanType]['keyword'];
-
-                    const join = lan.join(' ');
-                    languageResult[lanType]['data'] = await this.findeCrawling({
-                        id,
-                        ..._data,
-                        ...(userKeyword.length && {
-                            [myKeywordCrawlingObj(data.path)]: join,
-                        }),
-                    });
-                }
-            };
-
-            await Promise.all(
-                ['영어', '중국어', '일본어'].map(async (lanType) =>
-                    processLanguage(lanType),
-                ),
-            );
-
-            return {
-                data: languageResult,
-            };
-        }
-
-        const result = await this.findeCrawling({
-            id,
-            ..._data,
-            ...(userKeyword.length && {
-                [myKeywordCrawlingObj(data.path)]: userKeyword,
-            }),
+        const result = [] as any;
+        keyword.forEach((el) => {
+            data.path === 'language'
+                ? result.push({ [el]: languageTitle(el as testType) })
+                : data.path === 'qnet'
+                  ? result.push({ [el]: el.replaceAll('.', '/') })
+                  : result.push({ [el]: el });
         });
-
-        return _data.count
-            ? { data: result }
-            : {
-                  keyword,
-                  data: result,
-              };
+        return result;
     }
 
     async findeDetailCrawling({
