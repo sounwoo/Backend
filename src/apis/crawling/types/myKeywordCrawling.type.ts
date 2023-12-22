@@ -1,8 +1,5 @@
-import { findCrawling } from '../interfaces/returnType/findeCrawling.interface';
-
 export type myKeywordCrawlingReturnType = {
-    keyword?: string[];
-    data: findCrawling[];
+    keyword: string[];
 };
 
 export type myKeywordCrawlingObjType = Record<string, string[]>;
