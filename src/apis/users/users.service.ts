@@ -32,7 +32,7 @@ import {
     interestKeywordType,
     userProfileType,
 } from '../../common/types';
-import { paths } from '../../common/crawiling/interface';
+import { paths, testType } from '../../common/crawiling/interface';
 import { calendarData } from '../../common/util/calendar_data';
 import { calandarDate } from '../../common/util/getCalendarData';
 import { getDday } from '../../common/util/getDday';
@@ -192,12 +192,23 @@ export class UserService {
                     item.interest === interest.interest,
             );
 
-            if (isInterest) isInterest.keyword.push(keyword.keyword);
-            else
-                interestKeyword.push({
-                    interest: interest.interest,
-                    keyword: [keyword.keyword],
-                });
+            if (isInterest) {
+                interest.interest === 'language'
+                    ? isInterest.keyword.push(
+                          languageTitle(keyword.keyword as testType),
+                      )
+                    : isInterest.keyword.push(keyword.keyword);
+            } else {
+                interest.interest === 'language'
+                    ? interestKeyword.push({
+                          interest: interest.interest,
+                          keyword: [languageTitle(keyword.keyword as testType)],
+                      })
+                    : interestKeyword.push({
+                          interest: interest.interest,
+                          keyword: [keyword.keyword],
+                      });
+            }
         });
 
         return {
