@@ -426,41 +426,41 @@ export class UserService {
                 return count
                     ? data.body.hits.total.value
                     : data.body.hits.hits.length
-                    ? data.body.hits.hits.map((el: any) => {
-                          const { period, ...rest } = el._source;
-                          if (path === 'language') {
-                              const { test, ...data } = el._source;
-                              return {
-                                  id: el._id,
-                                  enterprise: 'YBM',
-                                  ...data,
-                                  title: languageTitle(test),
-                                  isScrap: true,
-                                  path,
-                              };
-                          }
-                          if (path === 'qnet') {
-                              const schedule = el._source.examSchedules[0];
-                              delete el._source.examSchedules;
-                              return {
-                                  mainImage: process.env.QNET_IMAGE,
-                                  id: el._id,
-                                  period: schedule.wtPeriod.split('[')[0],
-                                  examDate: schedule.wtDday,
-                                  ...el._source,
-                                  isScrap: true,
-                                  path,
-                              };
-                          }
-                          return {
-                              id: el._id,
-                              ...rest,
-                              Dday: getDday({ period }),
-                              isScrap: true,
-                              path,
-                          };
-                      })
-                    : null;
+                      ? data.body.hits.hits.map((el: any) => {
+                            const { period, ...rest } = el._source;
+                            if (path === 'language') {
+                                const { test, ...data } = el._source;
+                                return {
+                                    id: el._id,
+                                    enterprise: 'YBM',
+                                    ...data,
+                                    title: languageTitle(test),
+                                    isScrap: true,
+                                    path,
+                                };
+                            }
+                            if (path === 'qnet') {
+                                const schedule = el._source.examSchedules[0];
+                                delete el._source.examSchedules;
+                                return {
+                                    mainImage: process.env.QNET_IMAGE,
+                                    id: el._id,
+                                    period: schedule.wtPeriod.split('[')[0],
+                                    examDate: schedule.wtDday,
+                                    ...el._source,
+                                    isScrap: true,
+                                    path,
+                                };
+                            }
+                            return {
+                                id: el._id,
+                                ...rest,
+                                Dday: getDday({ period }),
+                                isScrap: true,
+                                path,
+                            };
+                        })
+                      : null;
             });
     }
 
@@ -727,6 +727,7 @@ export class UserService {
                                     examSchedules,
                                     period,
                                     participationPeriod,
+                                    homePage,
                                 } = info._source;
 
                                 const result = await calandarDate({
@@ -754,6 +755,9 @@ export class UserService {
                                                 : info._source.test,
                                         status: final.status,
                                         path: el,
+                                        ...(el === 'language' && {
+                                            homePage,
+                                        }),
                                     });
                                 });
                             }),

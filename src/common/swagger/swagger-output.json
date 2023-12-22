@@ -2116,7 +2116,8 @@
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
                                                 "status": "open, close, exam",
-                                                "path": "competition, outside, qnet, intern, language"
+                                                "path": "language",
+                                                "homePage": "접수 홈페이지 : http://~~"
                                             }
                                         ]
                                     }
@@ -2134,6 +2135,9 @@
                                             "type": "string"
                                         },
                                         "path": {
+                                            "type": "string"
+                                        },
+                                        "homePage": {
                                             "type": "string"
                                         }
                                     }
