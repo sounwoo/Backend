@@ -8,7 +8,7 @@ export class UpdateUserDTO {
 
     @IsOptional()
     @Length(2, 10)
-    @Matches(/^[a-zA-Z가-힣]+$/)
+    @Matches(/^[a-zA-Z가-힣0-9]+$/)
     nickname?: string;
 
     @IsOptional()
