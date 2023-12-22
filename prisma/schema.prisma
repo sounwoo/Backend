@@ -29,7 +29,7 @@ model User {
   nickname         String             @unique @db.VarChar(10)
   phone            String             @db.VarChar(13)
   profileImage     String
-  subMajor         SubMajor           @relation(fields: [subMajorId], references: [id])
+  subMajor         SubMajor           @relation(fields: [subMajorId], references: [id], onDelete: Cascade)
   subMajorId       String
   thermometer      Int                @default(0)
   top              Int                @default(100)
@@ -60,7 +60,7 @@ model Community {
   comment         Int             @default(0)
   date            DateTime        @default(dbgenerated("NOW()")) @db.DateTime
   userId          String?
-  user            User?           @relation(fields: [userId], references: [id])
+  user            User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
   communitiyLikes CommunityLike[]
   comments        Comment[]
 }
@@ -70,18 +70,18 @@ model Comment {
   comment     String        @db.VarChar(100)
   date        DateTime      @default(dbgenerated("NOW()")) @db.DateTime
   userId      String?
-  user        User?         @relation(fields: [userId], references: [id])
+  user        User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
   communityId String?
-  community   Community?    @relation(fields: [communityId], references: [id])
+  community   Community?    @relation(fields: [communityId], references: [id], onDelete: Cascade)
   commentLike CommentLike[]
 }
 
 model CommunityLike {
   id          String     @id @unique @default(uuid())
   userId      String
-  user        User       @relation(fields: [userId], references: [id])
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   communityId String?
-  community   Community? @relation(fields: [communityId], references: [id])
+  community   Community? @relation(fields: [communityId], references: [id], onDelete: Cascade)
 }
 
 model CommentLike {
@@ -134,7 +134,7 @@ model ScrapCompetition {
   id            String   @id @unique @default(uuid())
   createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   competitionId String
-  user          User     @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String
 }
 
@@ -142,7 +142,7 @@ model ScrapOutside {
   id        String   @id @unique @default(uuid())
   createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
   outsideId String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 }
 
@@ -150,7 +150,7 @@ model ScrapLanguage {
   id         String   @id @unique @default(uuid())
   createdAt  DateTime @default(dbgenerated("NOW()")) @db.DateTime
   languageId String
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
 }
 
@@ -158,7 +158,7 @@ model ScrapQNet {
   id        String   @id @unique @default(uuid())
   createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
   qNetId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 }
 
@@ -166,7 +166,7 @@ model ScrapIntern {
   id        String   @id @unique @default(uuid())
   createdAt DateTime @default(dbgenerated("NOW()")) @db.DateTime
   internId  String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
 }
 
@@ -176,7 +176,7 @@ model UserCompetition {
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -186,7 +186,7 @@ model UserOutside {
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -196,7 +196,7 @@ model UserQnet {
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -207,7 +207,7 @@ model UserIntern {
   activeTitle   String
   activeContent String
   period        String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -218,7 +218,7 @@ model UserLanguage {
   activeTitle   String
   activeContent String
   score         String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
