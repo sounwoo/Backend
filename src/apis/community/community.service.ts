@@ -46,7 +46,7 @@ export class CommunityService {
     > {
         return this.prisma.community.findMany({
             where: {
-                ...(category && category !== 'all' && { category }),
+                ...(category && category !== '전체' && { category }),
                 ...(title && { title: { contains: title } }),
                 ...(nickname && { user: { nickname: { contains: nickname } } }),
                 ...(content && {
