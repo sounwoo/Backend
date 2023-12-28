@@ -156,10 +156,10 @@ export class CrawlingService {
         const result = [] as any;
         keyword.forEach((el) => {
             data.path === 'language'
-                ? result.push({ [el]: languageTitle(el as testType) })
+                ? result.push(languageTitle(el as testType))
                 : data.path === 'qnet'
-                  ? result.push({ [el]: el.replaceAll('.', '/') })
-                  : result.push({ [el]: el });
+                  ? result.push(el.replaceAll('.', '/'))
+                  : result.push(el);
         });
         return result;
     }
