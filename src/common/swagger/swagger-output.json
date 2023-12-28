@@ -3639,12 +3639,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "keyword": [
-                                        { "과학/공학": "과학/공학" },
-                                        {
-                                            "기획/아이디어": "기획/아이디어"
-                                        }
-                                    ]
+                                    "keyword": ["과학/공학", "기획/아이디어"]
                                 },
                                 "schema": {
                                     "oneOf": [
@@ -3694,10 +3689,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "keyword": [
-                                        { "멘토링": "멘토링" },
-                                        { "서포터즈": "서포터즈" }
-                                    ]
+                                    "keyword": ["멘토링", "서포터즈"]
                                 },
                                 "schema": {
                                     "oneOf": [
@@ -3747,10 +3739,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "keyword": [
-                                        { "중견기업": "중견기업" },
-                                        { "대기업": "대기업" }
-                                    ]
+                                    "keyword": ["중견기업", "대기업"]
                                 },
                                 "schema": {
                                     "oneOf": [
@@ -3800,12 +3789,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "keyword": [
-                                        { "toeic": "TOEIC" },
-                                        {
-                                            "toeicWT": "TOEIC (Writing)"
-                                        }
-                                    ]
+                                    "keyword": ["TOEIC", "TOEIC (Writing)"]
                                 },
                                 "schema": {
                                     "oneOf": [
@@ -3855,10 +3839,7 @@
                         "content": {
                             "application/json": {
                                 "example": {
-                                    "keyword": [
-                                        { "정보통신": "정보통신" },
-                                        { "환경.에너지": "환경/에너지" }
-                                    ]
+                                    "keyword": ["정보통신", "환경/에너지"]
                                 },
                                 "schema": {
                                     "oneOf": [
