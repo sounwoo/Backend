@@ -16,6 +16,7 @@ import { CreateUserDTO, interestKeyword } from '../dto/create-user.dto';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { ScrappingDTO } from '../dto/scrapping.dto';
 import { GetUserScrapDTO } from '../dto/getUserScrap.dto';
+import { findPeriodThermometerDTO } from '../dto/findPeriodThermometer.dtd';
 
 export interface IUserCreateDTO {
     createDTO: CreateUserDTO;
@@ -148,4 +149,21 @@ export interface IThermometerFindMany {
 
 export interface IFindThermometerTopPercentage {
     top: User['top'];
+}
+
+export interface IFindPeriodThermometer {
+    id: idType['id'];
+    findPeriodThermometerDTO: findPeriodThermometerDTO;
+}
+
+interface PeriodThermometerItem {
+    createdAt: Date;
+    id: string;
+    title: string;
+    content: string;
+}
+
+export interface PeriodThermometerResponse {
+    totalCount?: number;
+    data: PeriodThermometerItem[];
 }

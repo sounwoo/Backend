@@ -171,7 +171,8 @@ model ScrapIntern {
 }
 
 model UserCompetition {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
@@ -181,7 +182,8 @@ model UserCompetition {
 }
 
 model UserOutside {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
@@ -191,7 +193,8 @@ model UserOutside {
 }
 
 model UserQnet {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
@@ -201,7 +204,8 @@ model UserQnet {
 }
 
 model UserIntern {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
@@ -212,7 +216,8 @@ model UserIntern {
 }
 
 model UserLanguage {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
