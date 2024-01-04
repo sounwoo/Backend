@@ -900,6 +900,7 @@ export class UserService {
         const result = dataSort.slice(start, end);
 
         return {
+            totalCount: count ? dataSort.length : undefined,
             data: result,
         };
     }
