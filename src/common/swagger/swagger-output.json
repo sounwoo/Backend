@@ -1658,6 +1658,83 @@
                 }
             }
         },
+
+        "/user/findPeriodThermometer": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "유저 온도계 활동내역 최신 순으로 조회하기",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "schema": {
+                            "type": "booelan",
+                            "example": "true"
+                        },
+                        "description": "데이터 개수 조회"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "page",
+                            "example": "1"
+                        },
+                        "description": "페이지 네이션"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "응답 성공",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "data": [
+                                        {
+                                            "data": [
+                                                {
+                                                    "createdAt": "2024-01-04T06:16:19.000Z",
+                                                    "id": "a73dc7e4-0934-4491-a568-56434dc98c33",
+                                                    "title": " xx 공모",
+                                                    "content": "공모전 66"
+                                                },
+                                                {
+                                                    "createdAt": "2023-12-27T09:44:56.000Z",
+                                                    "id": "3df556d8-210c-4a24-8d5e-5d6ed5961032",
+                                                    "title": " xx 공모",
+                                                    "content": "공모전 66"
+                                                },
+                                                {
+                                                    "createdAt": "2023-12-27T09:44:55.000Z",
+                                                    "id": "f4461827-0953-46e2-aecb-7e46ca2472dd",
+                                                    "title": " xx 공모",
+                                                    "content": "공모전 55"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "서버 에러",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "error": "서버 문제"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/scrapping": {
             "post": {
                 "tags": ["Users"],

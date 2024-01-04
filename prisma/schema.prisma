@@ -171,54 +171,59 @@ model ScrapIntern {
 }
 
 model UserCompetition {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
   userId        String?
 }
 
 model UserOutside {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
   userId        String?
 }
 
 model UserQnet {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
   userId        String?
 }
 
 model UserIntern {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
   activeContent String
   period        String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
   userId        String?
 }
 
 model UserLanguage {
-  id            String  @id @unique @default(uuid())
+  id            String   @id @unique @default(uuid())
+  createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
   field         String
   category      String
   activeTitle   String
   activeContent String
   score         String
-  user          User?   @relation(fields: [userId], references: [id])
+  user          User?    @relation(fields: [userId], references: [id])
   userId        String?
 }
 

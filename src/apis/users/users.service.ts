@@ -17,6 +17,8 @@ import {
     IThermometerFindMany,
     ITransData,
     IFindThermometerTopPercentage,
+    IFindPeriodThermometer,
+    PeriodThermometerResponse,
 } from './interfaces/user.interface';
 import CustomError from '../../common/error/customError';
 import { Service } from 'typedi';
@@ -799,5 +801,106 @@ export class UserService {
                 top: true,
             },
         });
+    }
+
+    async findPeriodThermometer({
+        id,
+        findPeriodThermometerDTO,
+    }: IFindPeriodThermometer): Promise<PeriodThermometerResponse> {
+        const { count, page } = findPeriodThermometerDTO;
+        const pageSize = 3;
+
+        const userData = await this.prisma.user.findMany({
+            where: { id },
+            select: {
+                userCompetition: {
+                    select: {
+                        createdAt: true,
+                        id: true,
+                        activeTitle: true,
+                        activeContent: true,
+                    },
+                },
+                userIntern: {
+                    select: {
+                        createdAt: true,
+                        id: true,
+                        activeTitle: true,
+                        activeContent: true,
+                    },
+                },
+                userLanguage: {
+                    select: {
+                        createdAt: true,
+                        id: true,
+                        activeTitle: true,
+                        activeContent: true,
+                    },
+                },
+                userOutside: {
+                    select: {
+                        createdAt: true,
+                        id: true,
+                        activeTitle: true,
+                        activeContent: true,
+                    },
+                },
+                userQnet: {
+                    select: {
+                        createdAt: true,
+                        id: true,
+                        activeTitle: true,
+                        activeContent: true,
+                    },
+                },
+            },
+        });
+
+        const arr = [
+            ...userData[0].userCompetition.map((el) => ({
+                createdAt: el.createdAt,
+                id: el.id,
+                title: el.activeTitle,
+                content: el.activeContent,
+            })),
+            ...userData[0].userIntern.map((el) => ({
+                createdAt: el.createdAt,
+                id: el.id,
+                title: el.activeTitle,
+                content: el.activeContent,
+            })),
+            ...userData[0].userLanguage.map((el) => ({
+                createdAt: el.createdAt,
+                id: el.id,
+                title: el.activeTitle,
+                content: el.activeContent,
+            })),
+            ...userData[0].userOutside.map((el) => ({
+                createdAt: el.createdAt,
+                id: el.id,
+                title: el.activeTitle,
+                content: el.activeContent,
+            })),
+            ...userData[0].userQnet.map((el) => ({
+                createdAt: el.createdAt,
+                id: el.id,
+                title: el.activeTitle,
+                content: el.activeContent,
+            })),
+        ];
+
+        const dataSort = arr.sort(
+            (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+        );
+
+        const start = (+page - 1) * pageSize;
+
+        const end = start + pageSize;
+
+        const result = dataSort.slice(start, end);
+
+        return {
+            data: result,
+        };
     }
 }

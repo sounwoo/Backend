@@ -12,6 +12,7 @@ import { CreateUserDTO } from '../apis/users/dto/create-user.dto';
 import { Path, paths } from './crawiling/interface';
 import { UpdateUserDTO } from '../apis/users/dto/update-user.dto';
 import { GetCalendarDTO } from '../apis/users/dto/getCalendar.dto';
+import { findPeriodThermometerDTO } from '../apis/users/dto/findPeriodThermometer.dtd';
 
 export type email = {
     email: CreateUserDTO['email'];
@@ -172,4 +173,9 @@ export type patchThermometerType = {
         period?: UserIntern['period'];
         score?: UserLanguage['score'];
     };
+};
+
+export type findPeriodThermometerType = {
+    count?: findPeriodThermometerDTO['count'];
+    page: findPeriodThermometerDTO['page'];
 };
