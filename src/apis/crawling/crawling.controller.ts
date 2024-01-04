@@ -83,8 +83,8 @@ class CrawlingController {
                   path as createLinkareerPaths,
               )
             : path === 'language'
-            ? await this.pathCrawling.languageData({ test })
-            : await this.pathCrawling.QNetData();
+              ? await this.pathCrawling.languageData({ test })
+              : await this.pathCrawling.QNetData();
 
         res.status(data.length ? 200 : 400).json({
             data: data.length ? '성공' : '실패',
@@ -113,7 +113,7 @@ class CrawlingController {
             path,
         });
 
-        res.status(200).json(result);
+        res.status(200).json({ keyword: result });
     }
 
     async randomCrawling(req: Request, res: Response) {

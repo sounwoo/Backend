@@ -46,7 +46,7 @@ export class CommunityService {
     > {
         return this.prisma.community.findMany({
             where: {
-                ...(category && { category }),
+                ...(category && category !== '전체' && { category }),
                 ...(title && { title: { contains: title } }),
                 ...(nickname && { user: { nickname: { contains: nickname } } }),
                 ...(content && {
@@ -101,6 +101,18 @@ export class CommunityService {
                                 id: true,
                                 profileImage: true,
                                 nickname: true,
+                            },
+                        },
+                        commentLike: {
+                            select: {
+                                commentId: true,
+                                user: {
+                                    select: {
+                                        id: true,
+                                        profileImage: true,
+                                        nickname: true,
+                                    },
+                                },
                             },
                         },
                     },
@@ -204,16 +216,31 @@ export class CommunityService {
     async deleteComment({
         userId,
         commentId,
-    }: IDeleteCommunityComment): Promise<boolean> {
+        communityId,
+    }: IDeleteCommunityComment): Promise<Comment[]> {
         await this.userService.isUserByID(userId);
 
         await this.findeOneComment({ id: commentId });
 
-        const result = await this.prisma.comment.deleteMany({
-            where: { AND: [{ id: commentId, userId }] },
+        await this.prisma.community.update({
+            where: { id: communityId },
+            data: {
+                comment: { decrement: 1 },
+                comments: { deleteMany: { AND: [{ id: commentId, userId }] } },
+            },
         });
 
-        return !!result;
+        return this.prisma.comment.findMany({
+            where: { communityId },
+            include: {
+                user: {
+                    select: {
+                        nickname: true,
+                        profileImage: true,
+                    },
+                },
+            },
+        });
     }
 
     async commentLike({

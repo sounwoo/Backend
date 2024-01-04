@@ -36,7 +36,7 @@ export type paths = {
     id?: string;
 };
 
-export type findeCrawlingType = paths & { count: string } & { id: string };
+export type findeCrawlingType = paths & { id: string };
 
 export type findeDetailType = {
     path: Path['path'] | 'language';

@@ -11,7 +11,7 @@ export const calendarData = (path: paths['path']) => {
             info: [...common, 'participationPeriod'],
         },
         language: {
-            info: ['test', 'openDate', 'closeDate', 'examDate'],
+            info: ['test', 'openDate', 'closeDate', 'examDate', 'homePage'],
         },
         qnet: {
             info: ['title', 'examSchedules'],
