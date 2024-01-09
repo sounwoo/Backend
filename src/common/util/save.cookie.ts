@@ -4,7 +4,7 @@ import { url } from './callbackUrl';
 export const saveCookie = (res: Response, key: string, value: string) => {
     if (url().origin) {
         // 배포 환경
-        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+        res.setHeader('Access-Control-Allow-Origin', 'https://quiet-chebakia-eb017d.netlify.app');
         res.setHeader('Access-Control-Allow-Credentials', 'true');
         res.setHeader(
             'Set-Cookie',
