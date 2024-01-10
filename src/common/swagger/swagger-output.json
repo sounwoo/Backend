@@ -5314,23 +5314,30 @@
                 }
             }
         },
-        "/community/comment/delete/{commentId}": {
+        "/community/comment/delete": {
             "delete": {
                 "tags": ["Community"],
                 "summary": "취준job담 댓글 삭제",
-                "parameters": [
-                    {
-                        "name": "commentId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "commentId",
-                            "example": "255617b0-446c-477e-96c9-cb9fe54bc6cc"
-                        },
-                        "description": "취준job담 댓글 id"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "communityId": {
+                                        "type": "string",
+                                        "example": "커뮤니티 id"
+                                    },
+                                    "commentId": {
+                                        "type": "string",
+                                        "example": "댓글 id"
+                                    }
+                                }
+                            }
+                        }
                     }
-                ],
+                },
                 "security": [
                     {
                         "BearerAuth": []
