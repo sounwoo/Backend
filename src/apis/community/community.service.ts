@@ -235,10 +235,14 @@ export class CommunityService {
             include: {
                 user: {
                     select: {
+                        id: true,
                         nickname: true,
                         profileImage: true,
                     },
                 },
+            },
+            orderBy: {
+                date: 'desc',
             },
         });
     }
