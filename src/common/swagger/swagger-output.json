@@ -5,13 +5,13 @@
         "title": "allinjob API Docs",
         "description": "올인잡 api 문서입니다"
     },
-    "host": "https://allinjob.co.kr",
+    "host": "https://backallinjob.co.kr",
     "servers": [
         {
             "url": "http://localhost:4000"
         },
         {
-            "url": "https://allinjob.co.kr"
+            "url": "https://backallinjob.co.kr"
         }
     ],
     "basePath": "/",
