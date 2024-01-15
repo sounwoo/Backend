@@ -4,7 +4,7 @@ const options = {
     info: {
         version: '3.0.0',
         title: 'allinjob API Docs',
-        description: '올인잡 api 문서입니다',
+        description: '올인잡 api 문서',
     },
     servers: [
         { url: 'http://localhost:4000' },
