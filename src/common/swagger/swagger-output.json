@@ -5,13 +5,13 @@
         "title": "allinjob API Docs",
         "description": "올인잡 api 문서입니다"
     },
-    "host": "https://allinjob.co.kr",
+    "host": "https://backallinjob.co.kr",
     "servers": [
         {
             "url": "http://localhost:4000"
         },
         {
-            "url": "https://allinjob.co.kr"
+            "url": "https://backallinjob.co.kr"
         }
     ],
     "basePath": "/",
@@ -2178,19 +2178,23 @@
                                             {
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
-                                                "status": "open, close, exam"
+                                                "status": "open, close, exam",
+                                                "path": "competition, outside, qnet, intern, language"
                                             },
                                             {
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
-                                                "status": "open, close, exam"
+                                                "status": "open, close, exam",
+                                                "path": "competition, outside, qnet, intern, language"
                                             }
                                         ],
                                         "13": [
                                             {
                                                 "id": "255617b0-446c-477e-96c9-cb9fe54bc6cc",
                                                 "title": "제목",
-                                                "status": "open, close, exam"
+                                                "status": "open, close, exam",
+                                                "path": "language",
+                                                "homePage": "접수 홈페이지 : http://~~"
                                             }
                                         ]
                                     }
@@ -2205,6 +2209,12 @@
                                             "type": "string"
                                         },
                                         "status": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "homePage": {
                                             "type": "string"
                                         }
                                     }
@@ -3694,101 +3704,24 @@
         "/crawling/myKeywordCrawling/competition": {
             "get": {
                 "tags": ["Crawling"],
-                "summary": "나의 관심 키워드 공모전 데이터 리스트 조회하기",
+                "summary": "나의 관심 키워드 공모전 조회하기",
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "count",
-                        "in": "query",
-                        "schema": {
-                            "type": "boolean",
-                            "format": "count",
-                            "example": "true"
-                        },
-                        "description": "competition 전체 개수 조회"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "schema": {
-                            "type": "string",
-                            "format": "page",
-                            "example": "1"
-                        },
-                        "description": "페이지 네이션"
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "응답 성공",
+                        "description": "공모전 키워드",
                         "content": {
                             "application/json": {
-                                "examples": {
-                                    "dataLength": {
-                                        "summary": "competition 경로에 따른 데이터 개수",
-                                        "value": {
-                                            "data": 60
-                                        }
-                                    },
-                                    "competitionData": {
-                                        "summary": "공모전 데이터",
-                                        "value": {
-                                            "keyword": [
-                                                "과학/공학",
-                                                "기획/아이디어"
-                                            ],
-                                            "data": [
-                                                {
-                                                    "id": "공모전 id : adfhttwerqwrasxczx",
-                                                    "view": 100,
-                                                    "mainImage": "이미지 url : awihqwifbjqjfbo",
-                                                    "scrap": 0,
-                                                    "enterprise": "조직: (주)~~",
-                                                    "Dday": "남은 일수 : D-10",
-                                                    "title": "제목",
-                                                    "isScrap": "true or false"
-                                                }
-                                            ]
-                                        }
-                                    }
+                                "example": {
+                                    "keyword": ["과학/공학", "기획/아이디어"]
                                 },
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "type": "number"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string"
-                                                },
-                                                "view": {
-                                                    "type": "number"
-                                                },
-                                                "mainImage": {
-                                                    "type": "string"
-                                                },
-                                                "scrap": {
-                                                    "type": "number"
-                                                },
-                                                "enterprise": {
-                                                    "type": "string"
-                                                },
-                                                "Dday": {
-                                                    "type": "string"
-                                                },
-                                                "title": {
-                                                    "type": "string"
-                                                },
-                                                "isScrap": {
-                                                    "type": "boolean"
-                                                }
-                                            }
+                                            "type": "string"
                                         }
                                     ]
                                 }
@@ -3821,98 +3754,24 @@
         "/crawling/myKeywordCrawling/outside": {
             "get": {
                 "tags": ["Crawling"],
-                "summary": "나의 관심 키워드 대외활동 데이터 리스트 조회하기",
+                "summary": "나의 관심 키워드 대외활동 조회하기",
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "count",
-                        "in": "query",
-                        "schema": {
-                            "type": "boolean",
-                            "format": "count",
-                            "example": "true"
-                        },
-                        "description": "outside 전체 개수 조회"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "schema": {
-                            "type": "string",
-                            "format": "page",
-                            "example": "1"
-                        },
-                        "description": "페이지 네이션"
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "응답 성공",
+                        "description": "대외활동 키워드",
                         "content": {
                             "application/json": {
-                                "examples": {
-                                    "dataLength": {
-                                        "summary": "out 경로에 따른 데이터 개수",
-                                        "value": {
-                                            "data": 60
-                                        }
-                                    },
-                                    "outsideData": {
-                                        "summary": "대외활동 데이터",
-                                        "value": {
-                                            "keyword": ["멘토링", "서포터즈"],
-                                            "data": [
-                                                {
-                                                    "id": "대외활동 id : asdasda",
-                                                    "view": 100,
-                                                    "mainImage": "이미지 url",
-                                                    "scrap": 0,
-                                                    "enterprise": "조직: (주)~~",
-                                                    "Dday": "남은 일수 : D-10",
-                                                    "title": "제목 : 모집",
-                                                    "isScrap": "true or false"
-                                                }
-                                            ]
-                                        }
-                                    }
+                                "example": {
+                                    "keyword": ["멘토링", "서포터즈"]
                                 },
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "type": "number"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string"
-                                                },
-                                                "view": {
-                                                    "type": "number"
-                                                },
-                                                "mainImage": {
-                                                    "type": "string"
-                                                },
-                                                "scrap": {
-                                                    "type": "number"
-                                                },
-                                                "enterprise": {
-                                                    "type": "string"
-                                                },
-                                                "Dday": {
-                                                    "type": "string"
-                                                },
-                                                "title": {
-                                                    "type": "string"
-                                                },
-                                                "isScrap": {
-                                                    "type": "boolean"
-                                                }
-                                            }
+                                            "type": "string"
                                         }
                                     ]
                                 }
@@ -3945,103 +3804,24 @@
         "/crawling/myKeywordCrawling/intern": {
             "get": {
                 "tags": ["Crawling"],
-                "summary": "나의 관심 키워드 인턴 데이터 리스트 조회하기",
+                "summary": "나의 관심 키워드 인턴 조회하기",
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "count",
-                        "in": "query",
-                        "schema": {
-                            "type": "boolean",
-                            "format": "count",
-                            "example": "true"
-                        },
-                        "description": "intern 전체 개수 조회"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "schema": {
-                            "type": "string",
-                            "format": "page",
-                            "example": "1"
-                        },
-                        "description": "페이지 네이션"
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "응답 성공",
+                        "description": "인턴 키워드",
                         "content": {
                             "application/json": {
-                                "examples": {
-                                    "dataLength": {
-                                        "summary": "intern 데이터 개수",
-                                        "value": {
-                                            "data": 60
-                                        }
-                                    },
-                                    "internData": {
-                                        "summary": "인턴 데이터",
-                                        "value": {
-                                            "keyword": ["중견기업", "대기업"],
-                                            "data": [
-                                                {
-                                                    "id": "인턴 id : adfhttwerqwrasxczx",
-                                                    "view": 100,
-                                                    "mainImage": "이미지 url : awihqwifbjqjfbo",
-                                                    "enterprise": "조직: (주)~~",
-                                                    "preferentialTreatment": "모집 직무 : IT/인터넷",
-                                                    "location": "서울 강남구",
-                                                    "title": "제목",
-                                                    "closeDate": "접수 마감 날짜 : 2023-11-06 10:00",
-                                                    "isScrap": "true or false"
-                                                }
-                                            ]
-                                        }
-                                    }
+                                "example": {
+                                    "keyword": ["중견기업", "대기업"]
                                 },
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "type": "number"
-                                        },
-
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string"
-                                                },
-                                                "view": {
-                                                    "type": "number"
-                                                },
-                                                "mainImage": {
-                                                    "type": "string"
-                                                },
-                                                "enterprise": {
-                                                    "type": "string"
-                                                },
-                                                "preferentialTreatment": {
-                                                    "type": "string"
-                                                },
-                                                "location": {
-                                                    "type": "string"
-                                                },
-                                                "title": {
-                                                    "type": "string"
-                                                },
-                                                "closeDate": {
-                                                    "type": "string"
-                                                },
-                                                "isScrap": {
-                                                    "type": "boolean"
-                                                }
-                                            }
+                                            "type": "string"
                                         }
                                     ]
                                 }
@@ -4074,102 +3854,22 @@
         "/crawling/myKeywordCrawling/language": {
             "get": {
                 "tags": ["Crawling"],
-                "summary": "나의 관심 키워드 자격증 리스트 조회하기",
+                "summary": "나의 관심 키워드 자격증 조회하기",
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "count",
-                        "in": "query",
-                        "schema": {
-                            "type": "boolean",
-                            "format": "count",
-                            "example": "true"
-                        },
-                        "description": "language 개수 조회"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "schema": {
-                            "type": "string",
-                            "format": "page",
-                            "example": "1"
-                        },
-                        "description": "페이지 네이션"
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "응답 성공",
+                        "description": "언어시험 키워드",
                         "content": {
                             "application/json": {
-                                "examples": {
-                                    "dataLength": {
-                                        "summary": "language데이터 개수",
-                                        "value": {
-                                            "data": 60
-                                        }
-                                    },
-                                    "languageData": {
-                                        "summary": "언어 데이터",
-                                        "value": {
-                                            "영어": {
-                                                "keyword": [
-                                                    "TOEIC",
-                                                    "TOEIC (Writing)"
-                                                ],
-                                                "data": [
-                                                    {
-                                                        "id": "언어별 id : adfhttwerqwrasxczx",
-                                                        "closeDate": "접수 마감 날짜 : 2023-11-06 10:00",
-                                                        "examDate": "시험날짜 : 2023-11-19 09:20",
-                                                        "homePage": "접수 홈페이지 : http://~~",
-                                                        "title": "테스트 이름 : TOEIC, TOEIC (Bridge), TOEIC (Speaking, Writing), TOEIC (Writing), TSC 중국어 말하기 시험, JPT, SJPT 일본어 말하기 시험",
-                                                        "isScrap": "true or false"
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    },
-                                    "NoKeyword": {
-                                        "summary": "일치하는 키워드가 없는 경우",
-                                        "value": {
-                                            "data": []
-                                        }
-                                    }
+                                "example": {
+                                    "keyword": ["TOEIC", "TOEIC (Writing)"]
                                 },
                                 "schema": {
                                     "oneOf": [
-                                        {
-                                            "type": "number"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string"
-                                                },
-                                                "closeDate": {
-                                                    "type": "string"
-                                                },
-                                                "examDate": {
-                                                    "type": "string"
-                                                },
-                                                "homePage": {
-                                                    "type": "string"
-                                                },
-                                                "title": {
-                                                    "type": "string"
-                                                },
-                                                "isScrap": {
-                                                    "type": "boolean"
-                                                }
-                                            }
-                                        },
                                         {
                                             "type": "string"
                                         }
@@ -4204,118 +3904,24 @@
         "/crawling/myKeywordCrawling/qnet": {
             "get": {
                 "tags": ["Crawling"],
-                "summary": "나의 관심 키워드 qnet 리스트 조회하기",
+                "summary": "나의 관심 키워드 qnet 조회하기",
                 "security": [
                     {
                         "BearerAuth": []
                     }
                 ],
-                "parameters": [
-                    {
-                        "name": "count",
-                        "in": "query",
-                        "schema": {
-                            "type": "boolean",
-                            "format": "count",
-                            "example": "true"
-                        },
-                        "description": "qnet 전체 개수 조회"
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "응답 성공",
+                        "description": "qnet 키워드",
                         "content": {
                             "application/json": {
-                                "examples": {
-                                    "dataLength": {
-                                        "summary": "qnet 데이터 개수",
-                                        "value": {
-                                            "data": 60
-                                        }
-                                    },
-                                    "qnetData": {
-                                        "summary": "자격증 데이터",
-                                        "value": {
-                                            "keyword": [
-                                                "정보통신",
-                                                "환경.에너지"
-                                            ],
-                                            "data": [
-                                                {
-                                                    "id": "자격증 id : adfhttwerqwrasxczx",
-                                                    "institution": "시행기관 : 한국산업인력공단",
-                                                    "relatedDepartment": "과련부처 : 통겨청",
-                                                    "examSchedules": {
-                                                        "wtResultDay": "필기 시험 발표 날짜 : 2023.09.22",
-                                                        "resultDay": "최종합격자 발표일 : 2023.11.15",
-                                                        "wtDday": "필기 시험 날짜 : 2023.09.02~2023.09.17",
-                                                        "wtPeriod": "필기 접수 기간 : 2023.08.07~2023.08.10[빈자리접수:2023.08.27~2023.08.28]",
-                                                        "turn": "회차 : 2023년정기기사4회",
-                                                        "ptPeriod": "실기 접수 기간 : 2023.09.04~2023.09.07빈자리접수:2023.10.01~2023.10.02",
-                                                        "ptDday": "실기 시험 날짜 : 2023.10.07~2023.10.26"
-                                                    },
-                                                    "title": "자격증명 : 에너지산업기사",
-                                                    "mainImage": "이미지 url : awihqwifbjqjfbo",
-                                                    "isScrap": "true or false"
-                                                }
-                                            ]
-                                        }
-                                    }
+                                "example": {
+                                    "keyword": ["정보통신", "환경/에너지"]
                                 },
                                 "schema": {
                                     "oneOf": [
                                         {
-                                            "type": "number"
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string"
-                                                },
-                                                "institution": {
-                                                    "type": "string"
-                                                },
-                                                "relatedDepartment": {
-                                                    "type": "string"
-                                                },
-                                                "examSchedules": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "wtResultDay": {
-                                                            "type": "string"
-                                                        },
-                                                        "resultDay": {
-                                                            "type": "string"
-                                                        },
-                                                        "wtDday": {
-                                                            "type": "string"
-                                                        },
-                                                        "wtPeriod": {
-                                                            "type": "string"
-                                                        },
-                                                        "turn": {
-                                                            "type": "string"
-                                                        },
-                                                        "ptPeriod": {
-                                                            "type": "string"
-                                                        },
-                                                        "ptDday": {
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                },
-                                                "title": {
-                                                    "type": "string"
-                                                },
-                                                "mainImage": {
-                                                    "type": "string"
-                                                },
-                                                "isScrap": {
-                                                    "type": "boolean"
-                                                }
-                                            }
+                                            "type": "string"
                                         }
                                     ]
                                 }
@@ -5708,23 +5314,30 @@
                 }
             }
         },
-        "/community/comment/delete/{commentId}": {
+        "/community/comment/delete": {
             "delete": {
                 "tags": ["Community"],
                 "summary": "취준job담 댓글 삭제",
-                "parameters": [
-                    {
-                        "name": "commentId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "format": "commentId",
-                            "example": "255617b0-446c-477e-96c9-cb9fe54bc6cc"
-                        },
-                        "description": "취준job담 댓글 id"
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "communityId": {
+                                        "type": "string",
+                                        "example": "커뮤니티 id"
+                                    },
+                                    "commentId": {
+                                        "type": "string",
+                                        "example": "댓글 id"
+                                    }
+                                }
+                            }
+                        }
                     }
-                ],
+                },
                 "security": [
                     {
                         "BearerAuth": []

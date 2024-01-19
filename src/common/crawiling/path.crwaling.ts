@@ -212,9 +212,25 @@ export class PathCrawling {
                                 const key =
                                     Object.keys(examScheduleObj)[indexs];
                                 if (key) {
+                                    let text = $(els)
+                                        .text()
+                                        .replace(/\s+/g, '');
+                                    if (
+                                        key === 'wtPeriod' ||
+                                        key === 'ptPeriod'
+                                    ) {
+                                        const startIndex = text.indexOf('[');
+                                        const endIndex = text.indexOf('빈자리');
+                                        text = text.substring(
+                                            0,
+                                            startIndex !== -1
+                                                ? startIndex
+                                                : endIndex,
+                                        );
+                                    }
                                     examScheduleObj[
                                         key as keyof typeof examScheduleObj
-                                    ] = $(els).text().replace(/\s+/g, '');
+                                    ] = text;
                                 }
                             });
                         examSchedules.push(examScheduleObj);
