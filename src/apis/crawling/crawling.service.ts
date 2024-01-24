@@ -51,9 +51,10 @@ export class CrawlingService {
         let should: object[] = [];
         for (const key in _data) {
             const value = datas[key];
+
             if (key === 'scale' || key === 'month') {
                 should = range({ key, arr: value.split(',') });
-            } else if (path === 'qnet') {
+            } else if (path === 'qnet' || path === 'language') {
                 must.push({
                     match: {
                         [key]: {
@@ -107,39 +108,39 @@ export class CrawlingService {
                 return count
                     ? data.body.hits.total.value
                     : data.body.hits.hits.length
-                      ? data.body.hits.hits.map((el: any) => {
-                            const { closeDate, test, period, ...rest } =
-                                el._source;
+                    ? data.body.hits.hits.map((el: any) => {
+                          const { closeDate, test, period, ...rest } =
+                              el._source;
 
-                            if (path === 'intern' || path === 'qnet') {
-                                delete el._source.scrap,
-                                    path === 'intern'
-                                        ? delete el._source.Dday
-                                        : delete el._source.view;
-                            }
+                          if (path === 'intern' || path === 'qnet') {
+                              delete el._source.scrap,
+                                  path === 'intern'
+                                      ? delete el._source.Dday
+                                      : delete el._source.view;
+                          }
 
-                            return {
-                                id: el._id,
-                                ...rest,
-                                ...(path === 'intern' && {
-                                    closeDate: splitDate(period),
-                                }),
-                                ...(path === 'language' && {
-                                    title: languageTitle(test),
-                                    closeDate,
-                                }),
-                                ...(path === 'qnet' && {
-                                    ...examSchedulesSort(el),
-                                }),
-                                ...(path === 'competition' || path === 'outside'
-                                    ? { Dday: getDday({ period }) }
-                                    : undefined),
-                                ...(id && {
-                                    isScrap: scrapIds.includes(el._id),
-                                }),
-                            };
-                        })
-                      : [];
+                          return {
+                              id: el._id,
+                              ...rest,
+                              ...(path === 'intern' && {
+                                  closeDate: splitDate(period),
+                              }),
+                              ...(path === 'language' && {
+                                  title: languageTitle(test),
+                                  closeDate,
+                              }),
+                              ...(path === 'qnet' && {
+                                  ...examSchedulesSort(el),
+                              }),
+                              ...(path === 'competition' || path === 'outside'
+                                  ? { Dday: getDday({ period }) }
+                                  : undefined),
+                              ...(id && {
+                                  isScrap: scrapIds.includes(el._id),
+                              }),
+                          };
+                      })
+                    : [];
             });
     }
 
@@ -158,8 +159,8 @@ export class CrawlingService {
             data.path === 'language'
                 ? result.push(languageTitle(el as testType))
                 : data.path === 'qnet'
-                  ? result.push(el.replaceAll('.', '/'))
-                  : result.push(el);
+                ? result.push(el.replaceAll('.', '/'))
+                : result.push(el);
         });
         return result;
     }
