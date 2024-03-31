@@ -16,39 +16,56 @@ enum Provider {
 }
 
 enum Classify {
-  en
-  ch
-  jp
+  en // 영어
+  ch // 중국어
+  jp // 일본어
 }
 
 model User {
-  id               String             @id @unique @default(uuid())
-  email            String             @unique
-  provider         Provider
-  name             String             @db.VarChar(5)
-  nickname         String             @unique @db.VarChar(10)
-  phone            String             @db.VarChar(13)
-  profileImage     String
-  subMajor         SubMajor           @relation(fields: [subMajorId], references: [id], onDelete: Cascade)
-  subMajorId       String
-  thermometer      Int                @default(0)
-  top              Int                @default(100)
-  interestKeyword  UserInterest[]
-  communities      Community[]
-  comments         Comment[]
-  communityLike    CommunityLike[]
-  commentLike      CommentLike[]
+  id       String   @id @unique @default(uuid())
+  email    String   @unique
+  provider Provider
+  // 구글 or 카카오
+
+  name         String @db.VarChar(5)
+  nickname     String @unique @db.VarChar(10)
+  phone        String @db.VarChar(13)
+  profileImage String
+
+  subMajor   SubMajor @relation(fields: [subMajorId], references: [id], onDelete: Cascade)
+  subMajorId String
+  //세부전공 -> major 전공학과 relation
+
+  thermometer Int @default(0)
+  // 온도계
+
+  top Int @default(100)
+  // 온도계 기준 상위 몇퍼센트 초기값 100%
+
+  interestKeyword UserInterest[]
+  // 관심분야 키워드 
+
+  communities   Community[]
+  comments      Comment[]
+  communityLike CommunityLike[]
+  commentLike   CommentLike[]
+
+  // 스크랩 
   scrapCompetition ScrapCompetition[]
   scrapOutside     ScrapOutside[]
   scrapLanguage    ScrapLanguage[]
   scrapQNet        ScrapQNet[]
   scrapIntern      ScrapIntern[]
-  userCompetition  UserCompetition[]
-  userOutside      UserOutside[]
-  userQnet         UserQnet[]
-  userIntern       UserIntern[]
-  userLanguage     UserLanguage[]
+
+  // 활동내역
+  userCompetition UserCompetition[]
+  userOutside     UserOutside[]
+  userQnet        UserQnet[]
+  userIntern      UserIntern[]
+  userLanguage    UserLanguage[]
 }
+
+// !(--------------------------------------------------------------)
 
 model Community {
   id              String          @id @unique @default(uuid())
@@ -58,7 +75,7 @@ model Community {
   view            Int             @default(0)
   like            Int             @default(0)
   comment         Int             @default(0)
-  date            DateTime        @default(dbgenerated("NOW()")) @db.DateTime
+  date            DateTime        @default(dbgenerated("NOW()")) @db.DateTime //생성시간
   userId          String?
   user            User?           @relation(fields: [userId], references: [id], onDelete: Cascade)
   communitiyLikes CommunityLike[]
@@ -93,15 +110,19 @@ model CommentLike {
 }
 
 model Interest {
-  id            String         @id @unique @default(uuid())
-  interest      String         @unique
+  id       String @id @unique @default(uuid())
+  interest String @unique
+  // 관심분야(공모전 or 대외활동 or 자격증 or 어학 or 인턴)
+
   keywords      Keyword[]
   userInterests UserInterest[]
 }
 
 model Keyword {
-  id            String         @id @unique @default(uuid())
-  keyword       String         @unique
+  id      String @id @unique @default(uuid())
+  keyword String @unique
+  // 키워드(공모전 or 대외활동 or 자격증 or 어학 or 인턴)
+
   interests     Interest[]
   userInterests UserInterest[]
 }
@@ -116,12 +137,17 @@ model UserInterest {
   keywordId  String
 }
 
+// 유저가 가지는 Interest : [ Keyword : [] ] 형태로 저장
+// !(--------------------------------------------------------------)
+
+// 전공학과
 model MainMajor {
   id        String     @id @unique @default(uuid())
   mainMajor String     @unique
   subMajor  SubMajor[]
 }
 
+//세부 전공
 model SubMajor {
   id          String    @id @unique @default(uuid())
   subMajor    String    @unique
@@ -130,6 +156,7 @@ model SubMajor {
   user        User[]
 }
 
+// 스크랩
 model ScrapCompetition {
   id            String   @id @unique @default(uuid())
   createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
@@ -170,6 +197,14 @@ model ScrapIntern {
   userId    String
 }
 
+// !(--------------------------------------------------------------)
+
+// 활동 내역 (온도계를 구현하기위한 테이블)
+// 유저가 작성하기 때문에, 실제 DB데이터가 아닐수도 있다.
+// field          활동분야 (공모전 or 대외활동 or 자격증 or 어학 or 인턴)
+// category       분야 선택(#기획/아이디어)
+// activeTitle    활동명
+// activeContent  활동내용
 model UserCompetition {
   id            String   @id @unique @default(uuid())
   createdAt     DateTime @default(dbgenerated("NOW()")) @db.DateTime
@@ -177,7 +212,7 @@ model UserCompetition {
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -188,7 +223,7 @@ model UserOutside {
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -199,7 +234,7 @@ model UserQnet {
   category      String
   activeTitle   String
   activeContent String
-  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -211,7 +246,7 @@ model UserIntern {
   activeTitle   String
   activeContent String
   period        String
-  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
 
@@ -223,101 +258,167 @@ model UserLanguage {
   activeTitle   String
   activeContent String
   score         String
-  user          User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String?
 }
+
+// !(--------------------------------------------------------------)
 
 // 대용량 데이터를 생각해서 -> 엘라스틱 서치 -> 이동 완료
 // model Outside {
 //   id                    String @id @unique @default(uuid())
-//   Dday                  String
 //   title                 String
 //   view                  Int
 //   mainImage             String @db.LongText
-//   organization          String
-//   enterprise            String
-//   target                String
-//   applicationPeriod     String
-//   participationPeriod   String
-//   personnel             String
-//   region                String
-//   preferentialTreatment String
+//   institution           String   -> 활동지역
+//   enterprise            String   -> 기업형태
+//   target                String   -> 대상
+//   participationPeriod   String   -> 접수 기간
+//   personnel             String   -> 모집인원
+//   preferentialTreatment String   -> 관심분야
 //   homePage              String @db.LongText
-//   detail                String @db.LongText
-//   benefits              String
-//   interests             String
-//   field                 String
-//   month                 Int
+//   detail                String @db.LongText -> <html> 코드
+//   benefits              String   -> 활동 혜택
+//   interests             String   -> 관심 분야
+//   field                 String   -> 활동 분야
+//   month                 Int      -> 개월수(정렬에 필요한 값 (3이하, 3~6,6~12,12 이상)
 // }
+
+// "title" : "2024 광주시 청소년수련관 대학생기획단 '존재감' 신규 단원 모집!",
+// "view" : 58,
+// "mainImage" : "https://res.cloudinary.com/linkareer/image/fetch/f_auto,q_50/https://api.linkareer.com/attachments/349624",
+// "enterprise" : "광주시 청소년수련관",
+// "institution" : "비영리단체/협회/재단",
+// "target" : "대학생",
+// "period" : "24.3.27 ~ 24.4.23",
+// "participationPeriod" : "24.4.30 ~ 25.2.27",
+// "personnel" : "7명",
+// "location" : "경기 광주시",
+// "preferentialTreatment" : "사진/영상/디자인 툴, 콘텐츠 기획/제작 경험, 휴학 중/시간 투자 가능, 타 대외활동 경험, 행사 기획 경험, 기타",
+// "homePage" : "https://www.gjyouth.or.kr/main.asp",
+// "benefits" : "실무 교육, 봉사활동시간",
+// "interests" : "행사/페스티벌, 기타",
+// "field" : "서포터즈, 기타",
+// "detail" : """<h2>상세내용</h2><div class="responsive-element"><p><img class="max-width-100" src="https://res.cloudinary.com/linkareer/image/fetch/f_auto,q_50,w_1024/https://api.linkareer.com/attachments/349623" title="대학생기획단 모집 포스터.png" alt="2024 광주시 청소년수련관 대학생기획단 '존재감' 신규 단원 모집!"><br style="clear:both"></p><p><span style="font-size:14pt">광주시 청소년수련관에서 2024년 대학생기획단 '존재감' 6기 신규 단원을 모집합니다~!</span></p><p><br></p><p><span style="font-size:14pt">청소년활동에 관심이 있는 대학생이라면 누구나! 지원 가능합니다~!😊</span></p><p><span style="font-size:14pt">많은 관심과 참여 부탁드립니다~!🙇🏻‍♂</span></p><p><br></p><p><span style="font-size:14pt">📢신청링크:&nbsp;https://naver.me/5ew57Yaa</span></p><p><br></p><p><span style="font-size:14pt">📢 모집일시&nbsp;&nbsp;</span></p><p><span style="font-size:14pt">&nbsp; - 모집기간&nbsp; : <span style="color:rgb(255, 0, 0)"><b><u>2024년 4월 23일(화)까지</u></b></span>&nbsp;&nbsp;</span></p><p><span style="font-size:14pt">&nbsp; - 모집인원 : 7명</span></p><p><span style="font-size:14pt">&nbsp; - 면접 일정 : 2024. 4. 27.(토)&nbsp;&nbsp;</span></p><p><span style="font-size:14pt">&nbsp; - 합격자 발표 일정 : 2024. 4. 30.(화)</span></p><p><br></p><p><span style="font-size:14pt">📢 신청대상: <span style="color:rgb(58, 50, 195)"><b><u>청소년 활동에 관심있는 재학중인 대학생(휴학생 포함)</u></b></span></span></p><p><br></p><p><span style="font-size:14pt">📢 활동내용&nbsp;</span></p><p><span style="font-size:14pt">&nbsp; <span style="color:rgb(58, 50, 195)">※ 프로젝트 활동 기획 • 운영&nbsp; &nbsp;</span></span></p><p><span style="font-size:14pt;color:rgb(58, 50, 195)">&nbsp; &nbsp; - 청소년활동 프로그램 기획 및 운영&nbsp; &nbsp;</span></p><p><span style="font-size:14pt;color:rgb(58, 50, 195)">&nbsp; &nbsp; - 청소년수련관 행사 보조 운영&nbsp;</span></p><p><span style="font-size:14pt">&nbsp; ※ SNS(인스타그램, 유튜브) 홍보활동&nbsp; &nbsp;</span></p><p><span style="font-size:14pt">&nbsp; &nbsp; - 수련관 홍보게시물 촬영 또는 제작&nbsp;</span></p><p><span style="font-size:14pt">&nbsp; ※ 역량강화 및 개발 교육&nbsp; &nbsp;</span></p><p><span style="font-size:14pt">&nbsp; &nbsp; - 기획활동 운영 및 직무역량 관련 교육</span></p><p><br></p><p><span style="font-size:14pt">📢 참여혜택</span></p><p><span style="font-size:14pt">&nbsp; 1. 자원봉사 시간 부여</span></p><p><span style="font-size:14pt">&nbsp; 2. 위촉장 수여 및 활동확인서 발급</span></p><p><span style="font-size:14pt">&nbsp; 3. 역량개발을 위한 교육 지급</span></p><p><span style="font-size:14pt">&nbsp; 4. 주도적 기획활동 기회 제공</span></p><p><span style="font-size:14pt">&nbsp; 5. 청소년수련관 공간 및 장비 사용(활동 목적 검토 및 수련관 일정 협의)</span></p><p><br></p><p><span style="font-size:14pt">📢 문의: 청소년활동팀 최현규(031-779-2432)</span></p></div>""",
+// "scrap" : 0,
+// "month" : 11
+
+// !(--------------------------------------------------------------)
 
 // model Intern {
 //   id                    String @id @unique @default(uuid())
-//   Dday                  String
 //   title                 String
 //   view                  Int
 //   mainImage             String @db.LongText
-//   organization          String
-//   enterprise            String
-//   applicationPeriod     String
-//   preferentialTreatment String
-//   personnel             String
-//   target                String
-//   region                String
+//   institution           String   -> 기업형태
+//   period                String   -> 접수기간
+//   enterprise            String   -> 기업명
+//   preferentialTreatment String   -> 관심분야
+//   personnel             String   -> 모집인원
+//   target                String   -> 채용형태
+//   region                String   -> 근무지역
 //   homePage              String @db.LongText
-//   detail                String @db.LongText
+//   detail                String @db.LongText -> <html>코드
 // }
+
+// "title" : "[링글잉글리시에듀케이션서비스] [계약직/전환형 인턴] QA Manager",
+// "view" : 140,
+// "mainImage" : "https://res.cloudinary.com/linkareer/image/fetch/f_auto,q_50/https://api.linkareer.com/attachments/350066",
+// "enterprise" : "링글잉글리시에듀케이션서비스",
+// "institution" : "스타트업",
+// "period" : "24.3.29 ~ 24.4.5",
+// "preferentialTreatment" : "IT/인터넷",
+// "personnel" : "0명",
+// "target" : "인턴",
+// "homePage" : "https://www.ringleplus.com/ko/student/landing/home",
+// "location" : "서울 서초구",
+// "detail" : """<h2>상세내용</h2><div class="responsive-element"><p><b><span style="background-color:rgb(222, 247, 229)">[계약직/전환형 인턴] QA Manager</span><br></b></p><p><br></p><p><b>[담당업무]</b></p><p>1. 링글의 여러 제품들에 대한 효율적인 품질 관리를 위해 테스트 전략과 계획을 구축하고 실행하며, Tech 팀과 협업하여 결함을 사전에 발견하고 해결합니다.</p><p>2. 품질 지표를 정의하고 측정하여 테스트 효과, 효율성을 관리합니다.</p><p>3. 링글 플러스, 틴즈, B2B, 튜터 등의 다양한 제품에 대한 제품 및 비즈니스 맥락을 이해하고, 제품의 목적, 기능, 요구사항 등을 파악하여 테스트 계획, 개발 및 실행을 주도합니다.</p><p>4. 문제점/이슈를 진단하고 결함을 리포팅하여, 이전에 발생한 오류의 재발/재현을 발견/검사하는 regression test를 관리합니다.</p><p>5. 엔지니어, PM과 협업하여 제품 품질 관련 이슈 유형을 구분하고, 우선순위를 지정합니다.</p><p>6. 엔지니어팀과 협업하여 test automation의 테스트 커버리지의 부족한 gap을 보완하고, 테스트 자동화와 메뉴얼 테스트를 잘 혼합/운영할 수 있도록 팀에 잘 맞는 자동화 프로세스를 구축합니다.</p><div><br></div><div><b>[접수기간]</b></div><div>03월 29일 ~ 04월 05일</div><div><br></div><div><b>[채용공고]</b></div><div><img class="max-width-100" src="https://res.cloudinary.com/linkareer/image/fetch/f_auto,q_50,w_1024/https://api.linkareer.com/attachments/350067" title="스크린샷_29-3-2024_215835_career.ringleplus.com.jpeg" alt="[링글잉글리시에듀케이션서비스] [계약직/전환형 인턴] QA Manager"><br style="clear:both"><br></div></div>""",
+// "scrap" : 0
+
+// !(--------------------------------------------------------------)
 
 // model Competition {
 //   id                String @id @unique @default(uuid())
-//   Dday              String
 //   title             String
 //   view              Int
 //   mainImage         String @db.LongText
-//   organization      String
-//   enterprise        String
-//   target            String
-//   scale             Int?
-//   applicationPeriod String
-//   benefits          String
+//   enterprise        String   -> 기업명
+//   institution       String   -> 기업형태
+//   target            String   -> 참여대상
+//   scale             Int?     -> 시상규모
+//   period            String   -> 접수기간
 //   homePage          String @db.LongText
-//   interests         String
-//   detail            String @db.LongText
+//   benefits          String   -> 활동혜택
+//   interests         String   -> 공모분야
+//   detail            String @db.LongText -> <html> 코드
+//   scrap             Int      -> 이 게시글 스크랩한 갯수
 // }
+
+// "title" : "2024 해양콘텐츠공모전 (포스터·슬로건·바다낙서 공모전)",
+// "view" : 208,
+// "mainImage" : "https://res.cloudinary.com/linkareer/image/fetch/f_auto,q_50/https://api.linkareer.com/attachments/349163",
+// "enterprise" : "부산광역시,(사)한국해양산업협회 / (사)한국해양산업협회",
+// "institution" : "공공기관/공기업",
+// "target" : "대상 제한 없음",
+// "scale" : 1200,
+// "period" : "24.3.26 ~ 24.4.23",
+// "homePage" : "http://www.kami.kr/notice/19",
+// "benefits" : "기타",
+// "interests" : "디자인/순수미술/공예",
+// "detail" : """<h2>상세내용</h2><div class="responsive-element"><p class="" style="font-style:normal;font-variant:normal;font-kerning:auto;font-optical-sizing:auto;font-feature-settings:normal;font-variation-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot; margin: 0px"><span style="font-size:24pt"><b>2024 해양콘텐츠공모전 (포스터·슬로건·바다낙서 공모전)</b></span></p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[공모 주제]</p><p class="" style="font:13px &quot; margin: 0px">- 2024 해양콘텐츠 공모전, 포스터/슬로건/바다낙서&nbsp;</p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[지원 자격]</p><p class="" style="font:13px &quot; margin: 0px">- 해양 분야에 관심이 있는 시민 누구나</p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[공모 기간] : 2024년 3월 26일(화)~4월 23일(화)</p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[부문]</p><p class="" style="font:13px &quot; margin: 0px">- 총 3개 부문 - 1. 포스터 부문&nbsp; 2. 슬로건 부문&nbsp; 3. 바다낙서 부문</p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[출 품 수] : 1인당 부문별 1점</p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[시상내역]</p><p class="" style="font:13px &quot; margin: 0px">- 포스터 부문</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 대상(1) : 상금(300만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 최우수상(2) : 상금(100만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 우수상(2) : 상금(50만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 입선(다수) : 상장 및 소정의 선물</p><p class="" style="font:13px &quot; margin: 0px">- 슬로건 부문</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 대상(1) : 상금(100만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 최우수상(2) : 상금(50만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 우수상(5) : 상금(20만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 입선(다수) : 상장 및 소정의 선물</p><p class="" style="font:13px &quot; margin: 0px">- 바다낙서 부문</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 대상(1) : 상금(100만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 최우수상(2) : 상금(50만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 우수상(5) : 상금(20만원) 및 상장</p><p class="" style="font:13px &quot; margin: 0px">&nbsp;* 입선(다수) : 상장 및 소정의 선물</p><p class="" style="font:13px &quot; min-height: 15px;margin:0px"><br></p><p class="" style="font:13px &quot; margin: 0px">[문의 사항]</p><p class="" style="font:13px &quot; margin: 0px">- <span class="" style="font:13px &quot;">공모전</span> <span class="" style="font:13px &quot;">사무국</span> 070-4239-3602 / wofkorea@naver.com</p><p class="" style="font:13px &quot; margin: 0px"><br></p><p class="" style="font:13px &quot; margin: 0px"><br></p><p class="" style="font:13px &quot; margin: 0px"><img class="max-width-100" src="https://res.cloudinary.com/linkareer/image/fetch/f_auto,q_50,w_1024/https://api.linkareer.com/attachments/349162" title="thumb-c027735e22fdedf11dbccc10c045f282_1711428969_4527_835x1460.jpeg" alt="2024 해양콘텐츠공모전 (포스터·슬로건·바다낙서 공모전)"><br style="clear:both"><br></p></div>""",
+// "scrap" : 0
+
+// !(--------------------------------------------------------------)
 
 // model Language {
 //   id                String  @id @unique @default(uuid())
-//   classify          String
-//   test              String
+//   classify          String   -> 중국어,일본어,영어(셋중 하나 선택)
+//   mainImage         String
 //   homePage          String
-//   turn              String?
-//   Dday              String
-//   resultDay         String
-//   applicationPeriod String
+//   scrap             Int      -> 이 게시글 스크랩한 갯수
+//   test              String   -> 시험종류
+//   examDate                   -> 시험 발표일
+//   openDate                   -> 접수 기간
+//   closeDate                  -> 시험 일
+//   sortDate                   -> 정렬(시험 시작일 asc)
 // }
+
+// "test" : "toeic",
+// "classify" : "영어",
+// "mainImage" : "https://imagesisa.ybmnet.co.kr/platform/exam_ybmnet_co_kr/common/all_menu_logo_01.gif?ver0811",
+// "homePage" : "https://exam.toeic.co.kr/receipt/examSchList.php",
+// "scrap" : 0,
+// "examDate" : "2024-03-16 09:20",
+// "openDate" : "2024-01-29 10:00",
+// "closeDate" : "2024-03-04 10:00",
+// "sortDate" : "2024-03-16T09:20:00.000Z"
+
+// !(--------------------------------------------------------------)
 
 // model QNet {
 //   id            String         @id @unique @default(uuid())
-//   detail        String         @db.LongText
-//   scheduleInfo  String         @db.LongText
-//   jmNm          String
-//   engJmNm       String?
-//   instiNm       String
-//   implNm        String
+//   detail        String         @db.LongText 
+//   scheduleInfo  String         @db.LongText  -> 시험 정보
 //   view          Int            @default(0)
-//   examSchedules ExamSchedule[]
+//   examSchedules ExamSchedule[]               -> 시험 일정 표
+//   title                                      -> 자격명         
+//   enTitle                                    -> 영문명
+//   relatedDepartment                          -> 관련부처
+//   institution                                -> 시행기관
+//   scrap
 //   subCategoryId String
 //   subCategory   SubCategory    @relation(fields: [subCategoryId], references: [id])
 // }
 
 // model MainCategory {
 //   id          String        @id @unique @default(uuid())
-//   keyword     String        @unique
+//   keyword     String        -> 대분류
 //   subCategory SubCategory[]
 // }
 
 // model SubCategory {
 //   id             String       @id @unique @default(uuid())
-//   keyword        String       @unique
+//   keyword        String       @unique  -> 중분류
 //   qnet           QNet[]
 //   mainCategoryId String
 //   mainCategory   MainCategory @relation(fields: [mainCategoryId], references: [id])
@@ -325,13 +426,34 @@ model UserLanguage {
 
 // model ExamSchedule {
 //   id          String @id @unique @default(uuid())
-//   turn        String
-//   wtReceipt   String
-//   wtDday      String
-//   wtResultDay String
-//   ptReceipt   String
-//   ptDday      String
-//   resultDay   String
-//   qNetId      String
+//   turn        String   -> 회차
+//   wtPeriod    String   -> 필기원서 접수일
+//   wtDday      String   -> 필기 시험일
+//   wtResultDay String   -> 필기합격(예정자) 발표일
+//   ptPeriod    String   -> 실기원서 접수일
+//   ptDday      String   -> 실기 시험일
+//   resultDay   String   -> 실기 발표일
+//   qNetId      String  
 //   qNet        QNet   @relation(fields: [qNetId], references: [id])
 // }
+
+// "mainCategory" : "문화.예술.디자인.방송",
+// "subCategory" : "디자인",
+// "detail" : """""",
+// "examSchedules" : [
+// {
+// "turn" : "2024년정기기술사133회",
+// "wtPeriod" : "",
+// "wtDday" : "2024.05.18",
+// "wtResultDay" : "2024.06.19",
+// "ptPeriod" : "",
+// "ptDday" : "2024.07.20~2024.07.31",
+// "resultDay" : "2024.08.21"
+// }
+// ],
+// "title" : "제품디자인기술사",
+// "enTitle" : "Professional Engineer Product Design",
+// "relatedDepartment" : "산업통상자원부",
+// "institution" : "한국산업인력공단",
+// "scrap" : 0,
+// "view" : 0
